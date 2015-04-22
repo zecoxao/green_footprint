@@ -1186,3 +1186,35 @@ REQUEST_URI=/footprint/index.php?r=rights
 in C:\xampp\htdocs\footprint\protected\modules\rights\components\RInstaller.php (180)
 in C:\xampp\htdocs\footprint\protected\modules\rights\controllers\InstallController.php (43)
 in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:47:06 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:47:11 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:47:25 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:47:28 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:47:37 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:47:39 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:47:49 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:47:50 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:48:05 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:48:06 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:48:18 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:48:20 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:48:30 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:48:31 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:48:38 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
+2015/04/22 14:48:39 [warning] [application] Failed to set unsafe attribute "layout" of "AweCrudCode".
+in C:\xampp\htdocs\footprint\index.php (13)
