@@ -15,7 +15,15 @@
 
     <?php echo $form->errorSummary($model) ?>
 
-                            <?php echo $form->datepickerRow($model, 'data', array('prepend'=>'<i class="icon-calendar"></i>')) ?>
+                            <?php echo $form->datepickerRow($model, 'data', array(
+					                'options' => array(
+					                    'language' => 'en',
+					                    'format' => 'yyyy-mm-dd', 
+					                    'weekStart'=> 1,
+					                    'autoclose'=>'true',
+					                    'keyboardNavigation'=>true,
+					                ), 
+					            ), array('prepend'=>'<i class="icon-calendar"></i>')) ?>
                         <?php echo $form->dropDownListRow($model, 'empresa', CHtml::listData(Empresa::model()->findAll(), 'id', Empresa::representingColumn())) ?>
                         <?php echo $form->dropDownListRow($model, 'profissional', CHtml::listData(Profissional::model()->findAll(), 'id', Profissional::representingColumn())) ?>
                         <?php echo $form->dropDownListRow($model, 'equipamento', CHtml::listData(Equipamento::model()->findAll(), 'id', Equipamento::representingColumn())) ?>
