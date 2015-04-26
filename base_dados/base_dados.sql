@@ -48,7 +48,7 @@ CREATE TABLE `authitem` (
 
 /*Data for the table `authitem` */
 
-insert  into `authitem`(`name`,`type`,`description`,`bizrule`,`data`) values ('Admin',2,NULL,NULL,'N;'),('Authenticated',2,NULL,NULL,'N;'),('Guest',2,NULL,NULL,'N;');
+insert  into `authitem`(`name`,`type`,`description`,`bizrule`,`data`) values ('Admin',2,NULL,NULL,'N;'),('Authenticated',2,NULL,NULL,'N;'),('Cae.*',1,NULL,NULL,'N;'),('Cae.Admin',0,NULL,NULL,'N;'),('Cae.Create',0,NULL,NULL,'N;'),('Cae.Delete',0,NULL,NULL,'N;'),('Cae.Index',0,NULL,NULL,'N;'),('Cae.Update',0,NULL,NULL,'N;'),('Cae.View',0,NULL,NULL,'N;'),('Cliente',2,'Cliente',NULL,'N;'),('Cliente.*',1,NULL,NULL,'N;'),('Cliente.Admin',0,NULL,NULL,'N;'),('Cliente.Create',0,NULL,NULL,'N;'),('Cliente.Delete',0,NULL,NULL,'N;'),('Cliente.Index',0,NULL,NULL,'N;'),('Cliente.Update',0,NULL,NULL,'N;'),('Cliente.View',0,NULL,NULL,'N;'),('Empresa.*',1,NULL,NULL,'N;'),('Empresa.Admin',0,NULL,NULL,'N;'),('Empresa.Create',0,NULL,NULL,'N;'),('Empresa.Delete',0,NULL,NULL,'N;'),('Empresa.Index',0,NULL,NULL,'N;'),('Empresa.Update',0,NULL,NULL,'N;'),('Empresa.View',0,NULL,NULL,'N;'),('Equipamento.*',1,NULL,NULL,'N;'),('Equipamento.Admin',0,NULL,NULL,'N;'),('Equipamento.Create',0,NULL,NULL,'N;'),('Equipamento.Delete',0,NULL,NULL,'N;'),('Equipamento.Index',0,NULL,NULL,'N;'),('Equipamento.Update',0,NULL,NULL,'N;'),('Equipamento.View',0,NULL,NULL,'N;'),('Guest',2,NULL,NULL,'N;'),('Potencia.*',1,NULL,NULL,'N;'),('Potencia.Admin',0,NULL,NULL,'N;'),('Potencia.Create',0,NULL,NULL,'N;'),('Potencia.Delete',0,NULL,NULL,'N;'),('Potencia.Index',0,NULL,NULL,'N;'),('Potencia.Update',0,NULL,NULL,'N;'),('Potencia.View',0,NULL,NULL,'N;'),('Profissional',2,'Profissional',NULL,'N;'),('Profissional.*',1,NULL,NULL,'N;'),('Profissional.Admin',0,NULL,NULL,'N;'),('Profissional.Create',0,NULL,NULL,'N;'),('Profissional.Delete',0,NULL,NULL,'N;'),('Profissional.Index',0,NULL,NULL,'N;'),('Profissional.Update',0,NULL,NULL,'N;'),('Profissional.View',0,NULL,NULL,'N;'),('Simulacao.*',1,NULL,NULL,'N;'),('Simulacao.Admin',0,NULL,NULL,'N;'),('Simulacao.Create',0,NULL,NULL,'N;'),('Simulacao.Delete',0,NULL,NULL,'N;'),('Simulacao.Index',0,NULL,NULL,'N;'),('Simulacao.Update',0,NULL,NULL,'N;'),('Simulacao.View',0,NULL,NULL,'N;'),('Site.*',1,NULL,NULL,'N;'),('Site.Contact',0,NULL,NULL,'N;'),('Site.Error',0,NULL,NULL,'N;'),('Site.Index',0,NULL,NULL,'N;'),('Site.Login',0,NULL,NULL,'N;'),('Site.Logout',0,NULL,NULL,'N;'),('User.Activation.*',1,NULL,NULL,'N;'),('User.Activation.Activation',0,NULL,NULL,'N;'),('User.Admin.*',1,NULL,NULL,'N;'),('User.Admin.Admin',0,NULL,NULL,'N;'),('User.Admin.Create',0,NULL,NULL,'N;'),('User.Admin.Delete',0,NULL,NULL,'N;'),('User.Admin.Update',0,NULL,NULL,'N;'),('User.Admin.View',0,NULL,NULL,'N;'),('User.Default.*',1,NULL,NULL,'N;'),('User.Default.Index',0,NULL,NULL,'N;'),('User.Login.*',1,NULL,NULL,'N;'),('User.Login.Login',0,NULL,NULL,'N;'),('User.Logout.*',1,NULL,NULL,'N;'),('User.Logout.Logout',0,NULL,NULL,'N;'),('User.Profile.*',1,NULL,NULL,'N;'),('User.Profile.Changepassword',0,NULL,NULL,'N;'),('User.Profile.Edit',0,NULL,NULL,'N;'),('User.Profile.Profile',0,NULL,NULL,'N;'),('User.ProfileField.*',1,NULL,NULL,'N;'),('User.ProfileField.Admin',0,NULL,NULL,'N;'),('User.ProfileField.Create',0,NULL,NULL,'N;'),('User.ProfileField.Delete',0,NULL,NULL,'N;'),('User.ProfileField.Update',0,NULL,NULL,'N;'),('User.ProfileField.View',0,NULL,NULL,'N;'),('User.Recovery.*',1,NULL,NULL,'N;'),('User.Recovery.Recovery',0,NULL,NULL,'N;'),('User.Registration.*',1,NULL,NULL,'N;'),('User.Registration.Registration',0,NULL,NULL,'N;'),('User.User.*',1,NULL,NULL,'N;'),('User.User.Index',0,NULL,NULL,'N;'),('User.User.View',0,NULL,NULL,'N;'),('Utilizador.*',1,NULL,NULL,'N;'),('Utilizador.Admin',0,NULL,NULL,'N;'),('Utilizador.Create',0,NULL,NULL,'N;'),('Utilizador.Delete',0,NULL,NULL,'N;'),('Utilizador.Index',0,NULL,NULL,'N;'),('Utilizador.Update',0,NULL,NULL,'N;'),('Utilizador.View',0,NULL,NULL,'N;'),('Visita.*',1,NULL,NULL,'N;'),('Visita.Admin',0,NULL,NULL,'N;'),('Visita.Create',0,NULL,NULL,'N;'),('Visita.Delete',0,NULL,NULL,'N;'),('Visita.Index',0,NULL,NULL,'N;'),('Visita.Update',0,NULL,NULL,'N;'),('Visita.View',0,NULL,NULL,'N;');
 
 /*Table structure for table `authitemchild` */
 
@@ -73,9 +73,11 @@ CREATE TABLE `cae` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `cae` */
+
+insert  into `cae`(`id`,`descricao`) values (1,'Agricultura');
 
 /*Table structure for table `cliente` */
 
@@ -90,9 +92,11 @@ CREATE TABLE `cliente` (
   KEY `empresa` (`empresa`),
   CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`utilizador`) REFERENCES `utilizador` (`id`),
   CONSTRAINT `cliente_ibfk_2` FOREIGN KEY (`empresa`) REFERENCES `empresa` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `cliente` */
+
+insert  into `cliente`(`id`,`utilizador`,`empresa`) values (1,1,1);
 
 /*Table structure for table `empresa` */
 
@@ -106,9 +110,11 @@ CREATE TABLE `empresa` (
   PRIMARY KEY (`id`),
   KEY `cae` (`cae`),
   CONSTRAINT `empresa_ibfk_1` FOREIGN KEY (`cae`) REFERENCES `cae` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `empresa` */
+
+insert  into `empresa`(`id`,`nome`,`localidade`,`cae`) values (1,'AGROLIMA','Viana do Castelo',1);
 
 /*Table structure for table `equipamento` */
 
@@ -124,9 +130,11 @@ CREATE TABLE `equipamento` (
   PRIMARY KEY (`id`),
   KEY `potencia` (`potencia`),
   CONSTRAINT `equipamento_ibfk_1` FOREIGN KEY (`potencia`) REFERENCES `potencia` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `equipamento` */
+
+insert  into `equipamento`(`id`,`nome`,`potencia`,`horas`,`quantidade`,`consumo`) values (1,'Lâmpadas',1,12,50,240000);
 
 /*Table structure for table `potencia` */
 
@@ -136,9 +144,11 @@ CREATE TABLE `potencia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `potencia` double NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `potencia` */
+
+insert  into `potencia`(`id`,`potencia`) values (1,400),(2,200);
 
 /*Table structure for table `profiles` */
 
@@ -195,9 +205,11 @@ CREATE TABLE `profissional` (
   PRIMARY KEY (`id`),
   KEY `user` (`utilizador`),
   CONSTRAINT `profissional_ibfk_1` FOREIGN KEY (`utilizador`) REFERENCES `utilizador` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `profissional` */
+
+insert  into `profissional`(`id`,`utilizador`) values (1,1);
 
 /*Table structure for table `rights` */
 
@@ -228,9 +240,11 @@ CREATE TABLE `simulacao` (
   KEY `equipamento` (`equipamento`),
   CONSTRAINT `simulacao_ibfk_1` FOREIGN KEY (`empresa`) REFERENCES `empresa` (`id`),
   CONSTRAINT `simulacao_ibfk_2` FOREIGN KEY (`equipamento`) REFERENCES `equipamento` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `simulacao` */
+
+insert  into `simulacao`(`id`,`empresa`,`data`,`consumo_total`,`equipamento`) values (3,1,'2015-04-24',40000,1);
 
 /*Table structure for table `users` */
 
@@ -255,7 +269,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`username`,`password`,`email`,`activkey`,`create_at`,`lastvisit_at`,`superuser`,`status`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','webmaster@example.com','9a24eff8c15a6a141ece27eb6947da0f','2015-04-22 12:32:11','2015-04-22 13:37:19',1,1),(2,'demo','fe01ce2a7fbac8fafaed7c982a04e229','demo@example.com','099f825543f7850cc038b90aaff39fac','2015-04-22 12:32:11','0000-00-00 00:00:00',0,1);
+insert  into `users`(`id`,`username`,`password`,`email`,`activkey`,`create_at`,`lastvisit_at`,`superuser`,`status`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','webmaster@example.com','9a24eff8c15a6a141ece27eb6947da0f','2015-04-22 12:32:11','2015-04-26 03:12:21',1,1),(2,'demo','fe01ce2a7fbac8fafaed7c982a04e229','demo@example.com','099f825543f7850cc038b90aaff39fac','2015-04-22 12:32:11','0000-00-00 00:00:00',0,1);
 
 /*Table structure for table `utilizador` */
 
@@ -267,9 +281,11 @@ CREATE TABLE `utilizador` (
   `password` varchar(50) NOT NULL,
   `contacto` int(9) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `utilizador` */
+
+insert  into `utilizador`(`id`,`nome`,`password`,`contacto`) values (1,'admin','admin',965350967);
 
 /*Table structure for table `visita` */
 
@@ -288,9 +304,11 @@ CREATE TABLE `visita` (
   CONSTRAINT `visita_ibfk_1` FOREIGN KEY (`empresa`) REFERENCES `empresa` (`id`),
   CONSTRAINT `visita_ibfk_2` FOREIGN KEY (`profissional`) REFERENCES `profissional` (`id`),
   CONSTRAINT `visita_ibfk_3` FOREIGN KEY (`equipamento`) REFERENCES `equipamento` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `visita` */
+
+insert  into `visita`(`id`,`data`,`empresa`,`profissional`,`equipamento`) values (1,'2015-04-25',1,1,1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
