@@ -1,7 +1,14 @@
 <?php
 
-class ClienteController extends AweController
+class ClienteController extends RController
 {
+	public function filters()
+    {
+        return array(
+            'rights', // perform access control for CRUD operations
+ 
+        );
+    }
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
