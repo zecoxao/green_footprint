@@ -27,7 +27,57 @@
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu', array(
+		<?php
+                $role = Rights::getAssignedRoles(Yii::app() -> user -> Id);
+                $user = Yii::app()->getUser();
+            foreach ($role as $role)
+                $role -> name;
+            if ($role -> name == 'Cliente'){
+                $this->widget('zii.widgets.CMenu', array(
+                    'items' => array(
+                        //array('label'=>'Home', 'url'=>array('/site/index')),
+                        //array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+                        //array('label'=>'Contact', 'url'=>array('/site/contact')),
+                        array('url' => Yii::app()->getModule('user')->loginUrl, 'label' => Yii::app()->getModule('user')->t("Login"), 'visible' => Yii::app()->user->isGuest),
+                        array('url' => Yii::app()->getModule('user')->registrationUrl, 'label' => Yii::app()->getModule('user')->t("Register"), 'visible' => Yii::app()->user->isGuest),
+                        array('url' => Yii::app()->getModule('user')->profileUrl, 'label' => Yii::app()->getModule('user')->t("Profile"), 'visible' => !Yii::app()->user->isGuest),
+                        array('url' => Yii::app()->getModule('user')->logoutUrl, 'label' => Yii::app()->getModule('user')->t("Logout") . ' (' . Yii::app()->user->name . ')', 'visible' => !Yii::app()->user->isGuest),
+                        array('label' => 'Rights', 'url' => array('/rights'), 'visible' => Yii::app()->user->checkAccess(Rights::module()->superuserName)),
+                        array('label' => 'Caes', 'url' => array('/cae/index')),  
+                        array('label' => 'Clientes', 'url' => array('/cliente/index')),  
+                        array('label' => 'Empresas', 'url' => array('/empresa/index')),  
+                        array('label' => 'Equipamentos', 'url' => array('/equipamento/index')),  
+                        //array('label' => 'Potencias', 'url' => array('/potencia/index')),  
+                        //array('label' => 'Profissionais', 'url' => array('/profissional/index')),  
+                        //array('label' => 'Simulacoes', 'url' => array('/simulacao/index')),  
+                        //array('label' => 'Utilizadores', 'url' => array('/utilizador/index')),  
+                        //array('label' => 'Visitas', 'url' => array('/visita/index')),  
+                    ),
+                ));
+            }else if($role -> name == 'Profissional' && $user->isGuest) {
+                $this->widget('zii.widgets.CMenu', array(
+                    'items' => array(
+                        //array('label'=>'Home', 'url'=>array('/site/index')),
+                        //array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+                        //array('label'=>'Contact', 'url'=>array('/site/contact')),
+                        array('url' => Yii::app()->getModule('user')->loginUrl, 'label' => Yii::app()->getModule('user')->t("Login"), 'visible' => Yii::app()->user->isGuest),
+                        array('url' => Yii::app()->getModule('user')->registrationUrl, 'label' => Yii::app()->getModule('user')->t("Register"), 'visible' => Yii::app()->user->isGuest),
+                        array('url' => Yii::app()->getModule('user')->profileUrl, 'label' => Yii::app()->getModule('user')->t("Profile"), 'visible' => !Yii::app()->user->isGuest),
+                        array('url' => Yii::app()->getModule('user')->logoutUrl, 'label' => Yii::app()->getModule('user')->t("Logout") . ' (' . Yii::app()->user->name . ')', 'visible' => !Yii::app()->user->isGuest),
+                        //array('label' => 'Rights', 'url' => array('/rights'), 'visible' => Yii::app()->user->checkAccess(Rights::module()->superuserName)),
+                        //array('label' => 'Caes', 'url' => array('/cae/index')),  
+                        //array('label' => 'Clientes', 'url' => array('/cliente/index')),  
+                        //array('label' => 'Empresas', 'url' => array('/empresa/index')),  
+                        //array('label' => 'Equipamentos', 'url' => array('/equipamento/index')),  
+                        //array('label' => 'Potencias', 'url' => array('/potencia/index')),  
+//                        array('label' => 'Profissionais', 'url' => array('/profissional/index')),  
+//                        array('label' => 'Simulacoes', 'url' => array('/simulacao/index')),  
+//                        array('label' => 'Utilizadores', 'url' => array('/utilizador/index')),  
+//                        array('label' => 'Visitas', 'url' => array('/visita/index')),  
+                    ),
+                ));
+            }else if($role -> name == 'Admin'){
+                $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
                         //array('label'=>'Home', 'url'=>array('/site/index')),
                         //array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
@@ -47,7 +97,31 @@
                         array('label' => 'Utilizadores', 'url' => array('/utilizador/index')),  
                         array('label' => 'Visitas', 'url' => array('/visita/index')),  
                     ),
-                )); ?>
+                ));
+            }else if($role -> name == 'Profissional') {
+                $this->widget('zii.widgets.CMenu', array(
+                    'items' => array(
+                        //array('label'=>'Home', 'url'=>array('/site/index')),
+                        //array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+                        //array('label'=>'Contact', 'url'=>array('/site/contact')),
+                        array('url' => Yii::app()->getModule('user')->loginUrl, 'label' => Yii::app()->getModule('user')->t("Login"), 'visible' => Yii::app()->user->isGuest),
+                        array('url' => Yii::app()->getModule('user')->registrationUrl, 'label' => Yii::app()->getModule('user')->t("Register"), 'visible' => Yii::app()->user->isGuest),
+                        array('url' => Yii::app()->getModule('user')->profileUrl, 'label' => Yii::app()->getModule('user')->t("Profile"), 'visible' => !Yii::app()->user->isGuest),
+                        array('url' => Yii::app()->getModule('user')->logoutUrl, 'label' => Yii::app()->getModule('user')->t("Logout") . ' (' . Yii::app()->user->name . ')', 'visible' => !Yii::app()->user->isGuest),
+                        //array('label' => 'Rights', 'url' => array('/rights'), 'visible' => Yii::app()->user->checkAccess(Rights::module()->superuserName)),
+                        array('label' => 'Caes', 'url' => array('/cae/index')),  
+                        array('label' => 'Clientes', 'url' => array('/cliente/index')),  
+                        array('label' => 'Empresas', 'url' => array('/empresa/index')),  
+                        array('label' => 'Equipamentos', 'url' => array('/equipamento/index')),  
+                        //array('label' => 'Potencias', 'url' => array('/potencia/index')),  
+//                        array('label' => 'Profissionais', 'url' => array('/profissional/index')),  
+//                        array('label' => 'Simulacoes', 'url' => array('/simulacao/index')),  
+//                        array('label' => 'Utilizadores', 'url' => array('/utilizador/index')),  
+//                        array('label' => 'Visitas', 'url' => array('/visita/index')),  
+                    ),
+                ));
+            }
+                 ?>
 	</div><!-- mainmenu -->
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
