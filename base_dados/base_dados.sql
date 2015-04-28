@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v11.33 (64 bit)
-MySQL - 5.6.21 : Database - pegada_energetica
+SQLyog Ultimate v10.00 Beta1
+MySQL - 5.6.24 : Database - pegada_energetica
 *********************************************************************
 */
 
@@ -31,7 +31,7 @@ CREATE TABLE `authassignment` (
 
 /*Data for the table `authassignment` */
 
-insert  into `authassignment`(`itemname`,`userid`,`bizrule`,`data`) values ('Admin','1',NULL,'N;');
+insert  into `authassignment`(`itemname`,`userid`,`bizrule`,`data`) values ('Admin','1',NULL,'N;'),('Profissional','3',NULL,'N;');
 
 /*Table structure for table `authitem` */
 
@@ -64,6 +64,8 @@ CREATE TABLE `authitemchild` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `authitemchild` */
+
+insert  into `authitemchild`(`parent`,`child`) values ('Cliente','Cae.*'),('Cliente','Empresa.*'),('Cliente','Equipamento.*'),('Profissional','Equipamento.*'),('Cliente','Potencia.*'),('Cliente','Simulacao.*'),('Profissional','Visita.*');
 
 /*Table structure for table `cae` */
 
@@ -160,11 +162,11 @@ CREATE TABLE `profiles` (
   `firstname` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`),
   CONSTRAINT `user_profile_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `profiles` */
 
-insert  into `profiles`(`user_id`,`lastname`,`firstname`) values (1,'Admin','Administrator'),(2,'Demo','Demo');
+insert  into `profiles`(`user_id`,`lastname`,`firstname`) values (1,'Admin','Administrator'),(2,'Demo','Demo'),(3,'Coixao','Jose');
 
 /*Table structure for table `profiles_fields` */
 
@@ -244,7 +246,7 @@ CREATE TABLE `simulacao` (
 
 /*Data for the table `simulacao` */
 
-insert  into `simulacao`(`id`,`empresa`,`data`,`consumo_total`,`equipamento`) values (3,1,'2015-04-24',40000,1);
+insert  into `simulacao`(`id`,`empresa`,`data`,`consumo_total`,`equipamento`) values (3,1,'2015-03-13',40000,1);
 
 /*Table structure for table `users` */
 
@@ -265,11 +267,11 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`email`),
   KEY `status` (`status`),
   KEY `superuser` (`superuser`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`username`,`password`,`email`,`activkey`,`create_at`,`lastvisit_at`,`superuser`,`status`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','webmaster@example.com','9a24eff8c15a6a141ece27eb6947da0f','2015-04-22 12:32:11','2015-04-26 03:12:21',1,1),(2,'demo','fe01ce2a7fbac8fafaed7c982a04e229','demo@example.com','099f825543f7850cc038b90aaff39fac','2015-04-22 12:32:11','0000-00-00 00:00:00',0,1);
+insert  into `users`(`id`,`username`,`password`,`email`,`activkey`,`create_at`,`lastvisit_at`,`superuser`,`status`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','webmaster@example.com','9a24eff8c15a6a141ece27eb6947da0f','2015-04-22 12:32:11','2015-04-28 22:03:44',1,1),(2,'demo','fe01ce2a7fbac8fafaed7c982a04e229','demo@example.com','099f825543f7850cc038b90aaff39fac','2015-04-22 12:32:11','0000-00-00 00:00:00',0,1),(3,'zecoxao','4c4999ac17adcef1a5a75fab71e5c857','zecoxao@hotmail.com','f1101bc9912abc07444511a8745ea9dd','2015-04-28 01:41:31','2015-04-28 22:16:52',0,1);
 
 /*Table structure for table `utilizador` */
 
