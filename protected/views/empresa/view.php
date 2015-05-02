@@ -23,6 +23,8 @@ $this->menu=array(
 	'attributes' => array(
         'id',
         'nome',
+        'latitude',
+        'longitude',
         'localidade',
         array(
 			'name'=>'cae',

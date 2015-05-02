@@ -44,6 +44,8 @@ $('.search-form form').submit(function(){
     'columns' => array(
         'id',
         'nome',
+        'latitude',
+        'longitude',
         'localidade',
         array(
                     'name' => 'cae',

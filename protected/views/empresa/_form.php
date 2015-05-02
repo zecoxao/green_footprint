@@ -16,6 +16,8 @@
     <?php echo $form->errorSummary($model) ?>
 
                             <?php echo $form->textFieldRow($model, 'nome', array('class' => 'span5', 'maxlength' => 50)) ?>
+                        <?php echo $form->textFieldRow($model, 'latitude', array('class' => 'span5')) ?>
+                        <?php echo $form->textFieldRow($model, 'longitude', array('class' => 'span5')) ?>
                         <?php echo $form->textFieldRow($model, 'localidade', array('class' => 'span5', 'maxlength' => 50)) ?>
                         <?php echo $form->dropDownListRow($model, 'cae', CHtml::listData(Cae::model()->findAll(), 'id', Cae::representingColumn())) ?>
                 <div class="form-actions">

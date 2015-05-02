@@ -16,6 +16,30 @@
 
         <?php endif; ?>
                 
+        <?php if (!empty($data->latitude)): ?>
+        <div class="field">
+            <div class="field_name">
+                <b><?php echo CHtml::encode($data->getAttributeLabel('latitude')); ?>:</b>
+            </div>
+            <div class="field_value">
+                <?php echo CHtml::encode($data->latitude); ?>
+            </div>
+        </div>
+
+        <?php endif; ?>
+                
+        <?php if (!empty($data->longitude)): ?>
+        <div class="field">
+            <div class="field_name">
+                <b><?php echo CHtml::encode($data->getAttributeLabel('longitude')); ?>:</b>
+            </div>
+            <div class="field_value">
+                <?php echo CHtml::encode($data->longitude); ?>
+            </div>
+        </div>
+
+        <?php endif; ?>
+                
         <?php if (!empty($data->localidade)): ?>
         <div class="field">
             <div class="field_name">

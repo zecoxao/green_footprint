@@ -31,7 +31,7 @@ CREATE TABLE `authassignment` (
 
 /*Data for the table `authassignment` */
 
-insert  into `authassignment`(`itemname`,`userid`,`bizrule`,`data`) values ('Admin','1',NULL,'N;'),('Profissional','3',NULL,'N;');
+insert  into `authassignment`(`itemname`,`userid`,`bizrule`,`data`) values ('Admin','1',NULL,'N;'),('Cliente','3',NULL,'N;');
 
 /*Table structure for table `authitem` */
 
@@ -75,11 +75,11 @@ CREATE TABLE `cae` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `cae` */
 
-insert  into `cae`(`id`,`descricao`) values (1,'Agricultura');
+insert  into `cae`(`id`,`descricao`) values (2,'Teste');
 
 /*Table structure for table `cliente` */
 
@@ -98,8 +98,6 @@ CREATE TABLE `cliente` (
 
 /*Data for the table `cliente` */
 
-insert  into `cliente`(`id`,`utilizador`,`empresa`) values (1,1,1);
-
 /*Table structure for table `empresa` */
 
 DROP TABLE IF EXISTS `empresa`;
@@ -107,16 +105,18 @@ DROP TABLE IF EXISTS `empresa`;
 CREATE TABLE `empresa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
+  `latitude` double(12,10) DEFAULT NULL,
+  `longitude` double(13,10) DEFAULT NULL,
   `localidade` varchar(50) NOT NULL,
   `cae` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `cae` (`cae`),
   CONSTRAINT `empresa_ibfk_1` FOREIGN KEY (`cae`) REFERENCES `cae` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `empresa` */
 
-insert  into `empresa`(`id`,`nome`,`localidade`,`cae`) values (1,'AGROLIMA','Viana do Castelo',1);
+insert  into `empresa`(`id`,`nome`,`latitude`,`longitude`,`localidade`,`cae`) values (2,'Teste2',41.2000000000,-8.2000000000,'Viana',2);
 
 /*Table structure for table `equipamento` */
 
@@ -136,8 +136,6 @@ CREATE TABLE `equipamento` (
 
 /*Data for the table `equipamento` */
 
-insert  into `equipamento`(`id`,`nome`,`potencia`,`horas`,`quantidade`,`consumo`) values (1,'Lâmpadas',1,12,50,240000);
-
 /*Table structure for table `potencia` */
 
 DROP TABLE IF EXISTS `potencia`;
@@ -149,8 +147,6 @@ CREATE TABLE `potencia` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `potencia` */
-
-insert  into `potencia`(`id`,`potencia`) values (1,400),(2,200);
 
 /*Table structure for table `profiles` */
 
@@ -246,8 +242,6 @@ CREATE TABLE `simulacao` (
 
 /*Data for the table `simulacao` */
 
-insert  into `simulacao`(`id`,`empresa`,`data`,`consumo_total`,`equipamento`) values (3,1,'2015-03-13',40000,1);
-
 /*Table structure for table `users` */
 
 DROP TABLE IF EXISTS `users`;
@@ -271,7 +265,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`username`,`password`,`email`,`activkey`,`create_at`,`lastvisit_at`,`superuser`,`status`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','webmaster@example.com','9a24eff8c15a6a141ece27eb6947da0f','2015-04-22 12:32:11','2015-04-28 22:03:44',1,1),(2,'demo','fe01ce2a7fbac8fafaed7c982a04e229','demo@example.com','099f825543f7850cc038b90aaff39fac','2015-04-22 12:32:11','0000-00-00 00:00:00',0,1),(3,'zecoxao','4c4999ac17adcef1a5a75fab71e5c857','zecoxao@hotmail.com','f1101bc9912abc07444511a8745ea9dd','2015-04-28 01:41:31','2015-04-28 22:16:52',0,1);
+insert  into `users`(`id`,`username`,`password`,`email`,`activkey`,`create_at`,`lastvisit_at`,`superuser`,`status`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','webmaster@example.com','9a24eff8c15a6a141ece27eb6947da0f','2015-04-22 12:32:11','2015-05-02 02:10:55',1,1),(2,'demo','fe01ce2a7fbac8fafaed7c982a04e229','demo@example.com','099f825543f7850cc038b90aaff39fac','2015-04-22 12:32:11','0000-00-00 00:00:00',0,1),(3,'zecoxao','4c4999ac17adcef1a5a75fab71e5c857','zecoxao@hotmail.com','f1101bc9912abc07444511a8745ea9dd','2015-04-28 01:41:31','2015-05-02 02:11:15',0,1);
 
 /*Table structure for table `utilizador` */
 
@@ -309,8 +303,6 @@ CREATE TABLE `visita` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `visita` */
-
-insert  into `visita`(`id`,`data`,`empresa`,`profissional`,`equipamento`) values (1,'2015-04-25',1,1,1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
