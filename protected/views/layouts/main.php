@@ -51,7 +51,8 @@
                         array('url' => Yii::app()->getModule('user')->logoutUrl, 'label' => Yii::app()->getModule('user')->t("Logout") . ' (' . Yii::app()->user->name . ')', 'visible' => !Yii::app()->user->isGuest), 
 						array('label' => 'Rights', 'url' => array('/rights'), 'visible' => Yii::app()->user->checkAccess(Rights::module()->superuserName)), 
                         array('label' => 'Equipamentos', 'url' => array('/equipamento/index')),  
-                        array('label' => 'Visitas', 'url' => array('/visita/index')),  
+                        array('label' => 'Visitas', 'url' => array('/visita/index')),
+						array('label' => 'Resultados', 'url' => array('/resultado/index')), 	
                     ),
                 ));
             }else if($role -> name == 'Admin'){
@@ -80,7 +81,8 @@
                         array('label' => 'Equipamentos', 'url' => array('/equipamento/index')),
 						array('label' => 'Mapa', 'url' => array('/mapa/index')), 						
                         array('label' => 'Potencias', 'url' => array('/potencia/index')),  
-                        array('label' => 'Simulacoes', 'url' => array('/simulacao/index')),   
+                        array('label' => 'Simulacoes', 'url' => array('/simulacao/index')), 
+						array('label' => 'Resultados', 'url' => array('/resultado/index')), 	
                     ),
                 ));
             }
