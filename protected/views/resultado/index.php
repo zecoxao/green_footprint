@@ -8,8 +8,26 @@
 
 ?>
 
-<?php
+<script type="text/javascript">
 
+function func(selectedValue)
+ {
+    //make the ajax call
+    $.ajax({
+        url: 'ajax/function.php',
+        type: 'POST',
+        data: {option : selectedValue},
+        success: function() {
+            console.log("Data sent!");
+        }
+    });
+	window.location.replace("http://localhost/footprint/index.php?r=resultado/index");
+}
+</script>
+
+
+<?php
+	session_start();
 	$role = Rights::getAssignedRoles(Yii::app() -> user -> Id);
 	foreach ($role as $role)
                 $role -> name;
@@ -25,7 +43,7 @@
 		echo "
 		<style>
 			#left_div {
-				float:left;width:100px;
+				float:left;width:200px;
 			}
 		</style>
 		";
@@ -38,28 +56,12 @@
 		$result_equipamento = mysqli_query($db_connection, $equipamento);
 
 		
-		echo "\t<select>\n";
+		echo "\t<select  onchange=\"func(this.value)\">\n";
 		echo"\t<option value='0'></option>\n";
 		while ($row = mysqli_fetch_array($result_equipamento))
 		{
 			$id = $row['id'];
 			$rep = $row ['nome'];
-			echo"\t<option value='$id'>$rep</option>\n";
-		}
-		echo "\t</select>\n";
-		
-		echo "\t<br>VISITA:<br>\n";
-
-		$visita = "SELECT * FROM visita";
-		$result_visita = mysqli_query($db_connection, $visita);
-
-		
-		echo "\t<select>\n";
-		echo"\t<option value='0'></option>\n";
-		while ($row = mysqli_fetch_array($result_visita))
-		{
-			$id = $row['id'];
-			$rep = $row ['data'];
 			echo"\t<option value='$id'>$rep</option>\n";
 		}
 		echo "\t</select>\n";
@@ -78,7 +80,13 @@
 		
 		$equipamento_display=$visita_display="";
 		
-		$equipamento_display = "1";
+		if(!isset($_SESSION['equipamento_profissional'])){
+			$equipamento_display = "0";
+		}
+		else{
+			$equipamento_display = $_SESSION['equipamento_profissional'];
+			echo $equipamento_display;
+		}
 		
 		echo "\tVISITA->EQUIPAMENTO:<br>\n";
 		$visita_equipamento = "SELECT * FROM visita WHERE equipamento=$equipamento_display";
@@ -89,6 +97,8 @@
 			$rep = $row ['data'];
 			echo"\t$rep<br>\n";
 		}
+		
+		
 		
 		echo "\t</div>\n";
 	
