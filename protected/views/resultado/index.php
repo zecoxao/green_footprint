@@ -10,13 +10,64 @@
 
 <script type="text/javascript">
 
-function func(selectedValue)
- {
+function func(selectedValue){
     //make the ajax call
     $.ajax({
         url: 'ajax/function.php',
         type: 'POST',
         data: {option : selectedValue},
+        success: function() {
+            console.log("Data sent!");
+        }
+    });
+	window.location.replace("http://localhost/footprint/index.php?r=resultado/index");
+}
+
+function func2(selectedValue){
+    //make the ajax call
+    $.ajax({
+        url: 'ajax/function.php',
+        type: 'POST',
+        data: {option2 : selectedValue},
+        success: function() {
+            console.log("Data sent!");
+        }
+    });
+	window.location.replace("http://localhost/footprint/index.php?r=resultado/index");
+}
+
+function func3(selectedValue){
+    //make the ajax call
+    $.ajax({
+        url: 'ajax/function.php',
+        type: 'POST',
+        data: {option3 : selectedValue},
+        success: function() {
+            console.log("Data sent!");
+        }
+    });
+	window.location.replace("http://localhost/footprint/index.php?r=resultado/index");
+}
+
+function func4(selectedValue){
+    //make the ajax call
+    $.ajax({
+        url: 'ajax/function.php',
+        type: 'POST',
+        data: {option4 : selectedValue},
+        success: function() {
+            console.log("Data sent!");
+        }
+    });
+	window.location.replace("http://localhost/footprint/index.php?r=resultado/index");
+}
+
+function func5(selectedValue){
+    //make the ajax call
+    $.ajax({
+        url: 'ajax/function.php',
+        type: 'POST',
+        data: {option5 : selectedValue},
         success: function() {
             console.log("Data sent!");
         }
@@ -85,7 +136,7 @@ function func(selectedValue)
 		}
 		else{
 			$equipamento_display = $_SESSION['equipamento_profissional'];
-			echo $equipamento_display;
+			//echo $equipamento_display;
 		}
 		
 		echo "\tVISITA->EQUIPAMENTO:<br>\n";
@@ -127,7 +178,7 @@ function func(selectedValue)
 
 		echo "\tCAE:<br>\n";
 		
-		echo "\t<select>\n";
+		echo "\t<select onchange=\"func2(this.value)\">\n";
 		echo"\t<option value='0'></option>\n";
 		while ($row = mysqli_fetch_array($result_cae))
 		{
@@ -143,7 +194,7 @@ function func(selectedValue)
 		$result_empresa = mysqli_query($db_connection, $empresa);
 
 		
-		echo "\t<select>\n";
+		echo "\t<select onchange=\"func3(this.value)\">\n";
 		echo"\t<option value='0'></option>\n";
 		while ($row = mysqli_fetch_array($result_empresa))
 		{
@@ -159,7 +210,7 @@ function func(selectedValue)
 		$result_equipamento = mysqli_query($db_connection, $equipamento);
 
 		
-		echo "\t<select>\n";
+		echo "\t<select onchange=\"func4(this.value)\">\n";
 		echo"\t<option value='0'></option>\n";
 		while ($row = mysqli_fetch_array($result_equipamento))
 		{
@@ -175,28 +226,12 @@ function func(selectedValue)
 		$result_potencia = mysqli_query($db_connection, $potencia);
 
 		
-		echo "\t<select>\n";
+		echo "\t<select onchange=\"func5(this.value)\">\n";
 		echo"\t<option value='0'></option>\n";
 		while ($row = mysqli_fetch_array($result_potencia))
 		{
 			$id = $row['id'];
 			$rep = $row ['potencia'];
-			echo"\t<option value='$id'>$rep</option>\n";
-		}
-		echo "\t</select>\n";
-		
-		echo "\t<br>SIMULACAO:<br>\n";
-
-		$simulacao = "SELECT * FROM simulacao";
-		$result_simulacao = mysqli_query($db_connection, $simulacao);
-
-		
-		echo "\t<select>\n";
-		echo"\t<option value='0'></option>\n";
-		while ($row = mysqli_fetch_array($result_simulacao))
-		{
-			$id = $row['id'];
-			$rep = $row ['consumo_total'];
 			echo"\t<option value='$id'>$rep</option>\n";
 		}
 		echo "\t</select>\n";
@@ -214,7 +249,13 @@ function func(selectedValue)
 		echo "\t<div id='center_div'>\n";
 		
 		$cae_display=$empresa_display=$equipamento_display=$potencia_display=$simulacao_display="";
-		$cae_display = "2";
+		if(!isset($_SESSION['cae_cliente'])){
+			$cae_display = "0";
+		}
+		else{
+			$cae_display = $_SESSION['cae_cliente'];
+			//echo $equipamento_display;
+		}
 		
 		echo "\tEMPRESA->CAE:<br>\n";
 		$empresa_cae = "SELECT * FROM empresa WHERE cae=$cae_display";
@@ -226,7 +267,13 @@ function func(selectedValue)
 			echo"\t$rep<br>\n";
 		}
 		
-		$empresa_display = "2";
+		if(!isset($_SESSION['empresa_cliente'])){
+			$empresa_display = "0";
+		}
+		else{
+			$empresa_display = $_SESSION['empresa_cliente'];
+			//echo $equipamento_display;
+		}
 		
 		echo "\tSIMULACAO->EMPRESA:<br>\n";
 		$simulacao_empresa = "SELECT * FROM simulacao WHERE empresa=$empresa_display";
@@ -238,7 +285,13 @@ function func(selectedValue)
 			echo"\t$rep<br>\n";
 		}
 		
-		$equipamento_display = "1";
+		if(!isset($_SESSION['equipamento_cliente'])){
+			$equipamento_display = "0";
+		}
+		else{
+			$equipamento_display = $_SESSION['equipamento_cliente'];
+			//echo $equipamento_display;
+		}
 		
 		echo "\tSIMULACAO->EQUIPAMENTO:<br>\n";
 		$simulacao_equipamento = "SELECT * FROM simulacao WHERE equipamento=$equipamento_display";
@@ -250,7 +303,13 @@ function func(selectedValue)
 			echo"\t$rep<br>\n";
 		}
 		
-		$potencia_display = "1";
+		if(!isset($_SESSION['potencia_cliente'])){
+			$potencia_display = "0";
+		}
+		else{
+			$potencia_display = $_SESSION['potencia_cliente'];
+			//echo $equipamento_display;
+		}
 		
 		echo "\tEQUIPAMENTO->POTENCIA:<br>\n";
 		$equipamento_potencia = "SELECT * FROM equipamento WHERE potencia=$potencia_display";
