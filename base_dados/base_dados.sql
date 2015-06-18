@@ -1,5 +1,5 @@
 /*
-SQLyog Ultimate v10.00 Beta1
+SQLyog Ultimate v11.5 (64 bit)
 MySQL - 5.6.24 : Database - pegada_energetica
 *********************************************************************
 */
@@ -94,7 +94,7 @@ CREATE TABLE `cliente` (
   KEY `empresa` (`empresa`),
   CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`utilizador`) REFERENCES `utilizador` (`id`),
   CONSTRAINT `cliente_ibfk_2` FOREIGN KEY (`empresa`) REFERENCES `empresa` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `cliente` */
 
@@ -132,9 +132,11 @@ CREATE TABLE `equipamento` (
   PRIMARY KEY (`id`),
   KEY `potencia` (`potencia`),
   CONSTRAINT `equipamento_ibfk_1` FOREIGN KEY (`potencia`) REFERENCES `potencia` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `equipamento` */
+
+insert  into `equipamento`(`id`,`nome`,`potencia`,`horas`,`quantidade`,`consumo`) values (1,'lampadas',1,12,15,72000),(2,'lol',1,25,12,120000);
 
 /*Table structure for table `potencia` */
 
@@ -144,9 +146,11 @@ CREATE TABLE `potencia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `potencia` double NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `potencia` */
+
+insert  into `potencia`(`id`,`potencia`) values (1,400);
 
 /*Table structure for table `profiles` */
 
@@ -232,15 +236,27 @@ CREATE TABLE `simulacao` (
   `empresa` int(11) NOT NULL,
   `data` date NOT NULL,
   `consumo_total` double NOT NULL,
-  `equipamento` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `empresa` (`empresa`),
-  KEY `equipamento` (`equipamento`),
-  CONSTRAINT `simulacao_ibfk_1` FOREIGN KEY (`empresa`) REFERENCES `empresa` (`id`),
-  CONSTRAINT `simulacao_ibfk_2` FOREIGN KEY (`equipamento`) REFERENCES `equipamento` (`id`)
+  CONSTRAINT `simulacao_ibfk_1` FOREIGN KEY (`empresa`) REFERENCES `empresa` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `simulacao` */
+
+/*Table structure for table `simulacao_equipamento` */
+
+DROP TABLE IF EXISTS `simulacao_equipamento`;
+
+CREATE TABLE `simulacao_equipamento` (
+  `simulacao` int(11) NOT NULL,
+  `equipamento` int(11) NOT NULL,
+  PRIMARY KEY (`simulacao`,`equipamento`),
+  KEY `equipamento` (`equipamento`),
+  CONSTRAINT `simulacao_equipamento_ibfk_1` FOREIGN KEY (`simulacao`) REFERENCES `simulacao` (`id`),
+  CONSTRAINT `simulacao_equipamento_ibfk_2` FOREIGN KEY (`equipamento`) REFERENCES `equipamento` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `simulacao_equipamento` */
 
 /*Table structure for table `users` */
 
@@ -265,7 +281,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`username`,`password`,`email`,`activkey`,`create_at`,`lastvisit_at`,`superuser`,`status`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','webmaster@example.com','9a24eff8c15a6a141ece27eb6947da0f','2015-04-22 12:32:11','2015-05-02 02:10:55',1,1),(2,'demo','fe01ce2a7fbac8fafaed7c982a04e229','demo@example.com','099f825543f7850cc038b90aaff39fac','2015-04-22 12:32:11','0000-00-00 00:00:00',0,1),(3,'zecoxao','4c4999ac17adcef1a5a75fab71e5c857','zecoxao@hotmail.com','f1101bc9912abc07444511a8745ea9dd','2015-04-28 01:41:31','2015-05-02 02:11:15',0,1);
+insert  into `users`(`id`,`username`,`password`,`email`,`activkey`,`create_at`,`lastvisit_at`,`superuser`,`status`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','webmaster@example.com','9a24eff8c15a6a141ece27eb6947da0f','2015-04-22 12:32:11','2015-06-07 19:49:52',1,1),(2,'demo','fe01ce2a7fbac8fafaed7c982a04e229','demo@example.com','099f825543f7850cc038b90aaff39fac','2015-04-22 12:32:11','0000-00-00 00:00:00',0,1),(3,'zecoxao','4c4999ac17adcef1a5a75fab71e5c857','zecoxao@hotmail.com','f1101bc9912abc07444511a8745ea9dd','2015-04-28 01:41:31','2015-06-18 15:44:52',0,1);
 
 /*Table structure for table `utilizador` */
 
@@ -292,17 +308,29 @@ CREATE TABLE `visita` (
   `data` date NOT NULL,
   `empresa` int(11) NOT NULL,
   `profissional` int(11) NOT NULL,
-  `equipamento` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `empresa` (`empresa`),
   KEY `profissional` (`profissional`),
-  KEY `equipamento` (`equipamento`),
   CONSTRAINT `visita_ibfk_1` FOREIGN KEY (`empresa`) REFERENCES `empresa` (`id`),
-  CONSTRAINT `visita_ibfk_2` FOREIGN KEY (`profissional`) REFERENCES `profissional` (`id`),
-  CONSTRAINT `visita_ibfk_3` FOREIGN KEY (`equipamento`) REFERENCES `equipamento` (`id`)
+  CONSTRAINT `visita_ibfk_2` FOREIGN KEY (`profissional`) REFERENCES `profissional` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `visita` */
+
+/*Table structure for table `visita_equipamento` */
+
+DROP TABLE IF EXISTS `visita_equipamento`;
+
+CREATE TABLE `visita_equipamento` (
+  `visita` int(11) NOT NULL,
+  `equipamento` int(11) NOT NULL,
+  PRIMARY KEY (`visita`,`equipamento`),
+  KEY `equipamento` (`equipamento`),
+  CONSTRAINT `visita_equipamento_ibfk_1` FOREIGN KEY (`visita`) REFERENCES `visita` (`id`),
+  CONSTRAINT `visita_equipamento_ibfk_2` FOREIGN KEY (`equipamento`) REFERENCES `equipamento` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `visita_equipamento` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
