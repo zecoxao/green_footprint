@@ -140,13 +140,19 @@ function func5(selectedValue){
 		}
 		
 		echo "\tVISITA->EQUIPAMENTO:<br>\n";
-		$visita_equipamento = "SELECT * FROM visita WHERE equipamento=$equipamento_display";
+		$visita_equipamento = "SELECT * FROM visita_equipamento WHERE equipamento=$equipamento_display";
 		$result_visita_equipamento = mysqli_query($db_connection, $visita_equipamento);
 		
 		while ($row = mysqli_fetch_array($result_visita_equipamento))
 		{
-			$rep = $row ['data'];
-			echo"\t$rep<br>\n";
+			$rep = $row ['visita'];
+			$visita_only = "SELECT * FROM visita WHERE id=$rep";
+			$result_visita_only = mysqli_query($db_connection, $visita_only);
+			while ($row2 = mysqli_fetch_array($result_visita_only))
+			{
+				$rep2 = $row2 ['data'];
+				echo"\t$rep2<br>\n";
+			}
 		}
 		
 		
@@ -294,13 +300,19 @@ function func5(selectedValue){
 		}
 		
 		echo "\tSIMULACAO->EQUIPAMENTO:<br>\n";
-		$simulacao_equipamento = "SELECT * FROM simulacao WHERE equipamento=$equipamento_display";
+		$simulacao_equipamento = "SELECT * FROM simulacao_equipamento WHERE equipamento=$equipamento_display";
 		$result_simulacao_equipamento = mysqli_query($db_connection, $simulacao_equipamento);
 		
 		while ($row = mysqli_fetch_array($result_simulacao_equipamento))
 		{
-			$rep = $row ['consumo_total'];
-			echo"\t$rep<br>\n";
+			$rep = $row ['simulacao'];
+			$simulacao_only = "SELECT * FROM simulacao WHERE id=$rep";
+			$result_simulacao_only = mysqli_query($db_connection, $simulacao_only);
+			while ($row2 = mysqli_fetch_array($result_simulacao_only))
+			{
+				$rep2 = $row2 ['consumo_total'];
+				echo"\t$rep2<br>\n";
+			}
 		}
 		
 		if(!isset($_SESSION['potencia_cliente'])){
@@ -322,7 +334,7 @@ function func5(selectedValue){
 		}
 		
 		echo "\tSIMULACAO->(EQUIPAMENTO,EMPRESA):<br>\n";
-		$simulacao_double = "SELECT * FROM simulacao WHERE equipamento=$equipamento_display and empresa=$empresa_display";
+		$simulacao_double = "SELECT * FROM simulacao WHERE empresa=$empresa_display";
 		$result_simulacao_double = mysqli_query($db_connection, $simulacao_double);
 		
 		while ($row = mysqli_fetch_array($result_simulacao_double))
