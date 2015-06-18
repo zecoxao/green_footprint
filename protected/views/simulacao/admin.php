@@ -50,11 +50,6 @@ $('.search-form form').submit(function(){
                 ),
         'data',
         'consumo_total',
-        array(
-                    'name' => 'equipamento',
-                    'value' => 'isset($data->equipamento0) ? $data->equipamento0 : null',
-                    'filter' => CHtml::listData(Equipamento::model()->findAll(), 'id', Equipamento::representingColumn()),
-                ),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 		),

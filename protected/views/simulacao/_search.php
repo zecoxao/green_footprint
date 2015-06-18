@@ -14,8 +14,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php echo $form->textFieldRow($model, 'consumo_total', array('class' => 'span5')); ?>
 
-<?php echo $form->dropDownListRow($model, 'equipamento', CHtml::listData(Equipamento::model()->findAll(), 'id', Equipamento::representingColumn())); ?>
-
 <div class="form-actions">
     <?php $this->widget('bootstrap.widgets.TbButton', array(
 			'type' => 'primary',

@@ -40,6 +40,7 @@ class SimulacaoController extends RController
 		{
 			$model->attributes = $_POST['Simulacao'];
 			if($model->save()) {
+                if (isset($_POST['Simulacao']['equipamentos'])) $model->saveManyMany('equipamentos', $_POST['Simulacao']['equipamentos']);
                 $this->redirect(array('view', 'id' => $model->id));
             }
 		}
@@ -64,6 +65,8 @@ class SimulacaoController extends RController
 		{
 			$model->attributes = $_POST['Simulacao'];
 			if($model->save()) {
+                if (isset($_POST['Simulacao']['equipamentos'])) $model->saveManyMany('equipamentos', $_POST['Simulacao']['equipamentos']);
+                else $model->saveManyMany('equipamentos', array());
 				$this->redirect(array('view','id' => $model->id));
             }
 		}

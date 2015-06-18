@@ -14,8 +14,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php echo $form->dropDownListRow($model, 'profissional', CHtml::listData(Profissional::model()->findAll(), 'id', Profissional::representingColumn())); ?>
 
-<?php echo $form->dropDownListRow($model, 'equipamento', CHtml::listData(Equipamento::model()->findAll(), 'id', Equipamento::representingColumn())); ?>
-
 <div class="form-actions">
     <?php $this->widget('bootstrap.widgets.TbButton', array(
 			'type' => 'primary',

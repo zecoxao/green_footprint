@@ -13,11 +13,10 @@
  * @property string $data
  * @property integer $empresa
  * @property integer $profissional
- * @property integer $equipamento
  *
  * @property Empresa $empresa0
  * @property Profissional $profissional0
- * @property Equipamento $equipamento0
+ * @property Equipamento[] $equipamentos
  */
 abstract class BaseVisita extends AweActiveRecord {
 
@@ -35,9 +34,9 @@ abstract class BaseVisita extends AweActiveRecord {
 
     public function rules() {
         return array(
-            array('data, empresa, profissional, equipamento', 'required'),
-            array('empresa, profissional, equipamento', 'numerical', 'integerOnly'=>true),
-            array('id, data, empresa, profissional, equipamento', 'safe', 'on'=>'search'),
+            array('data, empresa, profissional', 'required'),
+            array('empresa, profissional', 'numerical', 'integerOnly'=>true),
+            array('id, data, empresa, profissional', 'safe', 'on'=>'search'),
         );
     }
 
@@ -45,7 +44,7 @@ abstract class BaseVisita extends AweActiveRecord {
         return array(
             'empresa0' => array(self::BELONGS_TO, 'Empresa', 'empresa'),
             'profissional0' => array(self::BELONGS_TO, 'Profissional', 'profissional'),
-            'equipamento0' => array(self::BELONGS_TO, 'Equipamento', 'equipamento'),
+            'equipamentos' => array(self::MANY_MANY, 'Equipamento', 'visita_equipamento(visita, equipamento)'),
         );
     }
 
@@ -58,10 +57,9 @@ abstract class BaseVisita extends AweActiveRecord {
                 'data' => Yii::t('app', 'Data'),
                 'empresa' => Yii::t('app', 'Empresa'),
                 'profissional' => Yii::t('app', 'Profissional'),
-                'equipamento' => Yii::t('app', 'Equipamento'),
                 'empresa0' => null,
                 'profissional0' => null,
-                'equipamento0' => null,
+                'equipamentos' => null,
         );
     }
 
@@ -72,7 +70,6 @@ abstract class BaseVisita extends AweActiveRecord {
         $criteria->compare('data', $this->data, true);
         $criteria->compare('empresa', $this->empresa);
         $criteria->compare('profissional', $this->profissional);
-        $criteria->compare('equipamento', $this->equipamento);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

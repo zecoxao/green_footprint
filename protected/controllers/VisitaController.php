@@ -40,6 +40,7 @@ class VisitaController extends RController
 		{
 			$model->attributes = $_POST['Visita'];
 			if($model->save()) {
+                if (isset($_POST['Visita']['equipamentos'])) $model->saveManyMany('equipamentos', $_POST['Visita']['equipamentos']);
                 $this->redirect(array('view', 'id' => $model->id));
             }
 		}
@@ -64,6 +65,8 @@ class VisitaController extends RController
 		{
 			$model->attributes = $_POST['Visita'];
 			if($model->save()) {
+                if (isset($_POST['Visita']['equipamentos'])) $model->saveManyMany('equipamentos', $_POST['Visita']['equipamentos']);
+                else $model->saveManyMany('equipamentos', array());
 				$this->redirect(array('view','id' => $model->id));
             }
 		}

@@ -52,6 +52,7 @@
 						array('label' => 'Rights', 'url' => array('/rights'), 'visible' => Yii::app()->user->checkAccess(Rights::module()->superuserName)), 
                         array('label' => 'Equipamentos', 'url' => array('/equipamento/index')),  
                         array('label' => 'Visitas', 'url' => array('/visita/index')),
+						array('label' => 'VisitasEquipamentos', 'url' => array('/visitaEquipamento/index')),
 						array('label' => 'Resultados', 'url' => array('/resultado/index')), 	
                     ),
                 ));
@@ -82,6 +83,7 @@
 						array('label' => 'Mapa', 'url' => array('/mapa/index')), 						
                         array('label' => 'Potencias', 'url' => array('/potencia/index')),  
                         array('label' => 'Simulacoes', 'url' => array('/simulacao/index')), 
+						array('label' => 'SimulacoesEquipamentos', 'url' => array('/simulacaoEquipamento/index')),
 						array('label' => 'Resultados', 'url' => array('/resultado/index')), 	
                     ),
                 ));

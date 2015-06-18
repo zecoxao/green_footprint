@@ -54,11 +54,6 @@ $('.search-form form').submit(function(){
                     'value' => 'isset($data->profissional0) ? $data->profissional0 : null',
                     'filter' => CHtml::listData(Profissional::model()->findAll(), 'id', Profissional::representingColumn()),
                 ),
-        array(
-                    'name' => 'equipamento',
-                    'value' => 'isset($data->equipamento0) ? $data->equipamento0 : null',
-                    'filter' => CHtml::listData(Equipamento::model()->findAll(), 'id', Equipamento::representingColumn()),
-                ),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 		),

@@ -26,8 +26,13 @@
 					            ), array('prepend'=>'<i class="icon-calendar"></i>')) ?>
                         <?php echo $form->dropDownListRow($model, 'empresa', CHtml::listData(Empresa::model()->findAll(), 'id', Empresa::representingColumn())) ?>
                         <?php echo $form->dropDownListRow($model, 'profissional', CHtml::listData(Profissional::model()->findAll(), 'id', Profissional::representingColumn())) ?>
-                        <?php echo $form->dropDownListRow($model, 'equipamento', CHtml::listData(Equipamento::model()->findAll(), 'id', Equipamento::representingColumn())) ?>
-                <div class="form-actions">
+            <div class="row nm_row">
+<label for="equipamentos"><?php echo Yii::t('app', 'Equipamentos'); ?></label>
+<?php echo CHtml::checkBoxList('Visita[equipamentos]', array_map('AweHtml::getPrimaryKey', $model->equipamentos),
+CHtml::listData(Equipamento::model()->findAll(), 'id', 'nome'),
+array('attributeitem' => 'id', 'checkAll' => 'Select All')) ?></div>
+
+    <div class="form-actions">
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'type'=>'primary',

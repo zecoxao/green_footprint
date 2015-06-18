@@ -33,11 +33,6 @@ $this->menu=array(
 			'value'=>($model->profissional0 !== null) ? CHtml::link($model->profissional0, array('/profissional/view', 'id' => $model->profissional0->id)).' ' : null,
 			'type'=>'html',
 		),
-        array(
-			'name'=>'equipamento',
-			'value'=>($model->equipamento0 !== null) ? CHtml::link($model->equipamento0, array('/equipamento/view', 'id' => $model->equipamento0->id)).' ' : null,
-			'type'=>'html',
-		),
 	),
 )); ?>
 </fieldset>

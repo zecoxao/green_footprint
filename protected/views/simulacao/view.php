@@ -29,11 +29,6 @@ $this->menu=array(
 		),
         'data',
         'consumo_total',
-        array(
-			'name'=>'equipamento',
-			'value'=>($model->equipamento0 !== null) ? CHtml::link($model->equipamento0, array('/equipamento/view', 'id' => $model->equipamento0->id)).' ' : null,
-			'type'=>'html',
-		),
 	),
 )); ?>
 </fieldset>

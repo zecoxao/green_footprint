@@ -13,10 +13,9 @@
  * @property integer $empresa
  * @property string $data
  * @property double $consumo_total
- * @property integer $equipamento
  *
  * @property Empresa $empresa0
- * @property Equipamento $equipamento0
+ * @property Equipamento[] $equipamentos
  */
 abstract class BaseSimulacao extends AweActiveRecord {
 
@@ -34,17 +33,17 @@ abstract class BaseSimulacao extends AweActiveRecord {
 
     public function rules() {
         return array(
-            array('empresa, data, consumo_total, equipamento', 'required'),
-            array('empresa, equipamento', 'numerical', 'integerOnly'=>true),
+            array('empresa, data, consumo_total', 'required'),
+            array('empresa', 'numerical', 'integerOnly'=>true),
             array('consumo_total', 'numerical'),
-            array('id, empresa, data, consumo_total, equipamento', 'safe', 'on'=>'search'),
+            array('id, empresa, data, consumo_total', 'safe', 'on'=>'search'),
         );
     }
 
     public function relations() {
         return array(
             'empresa0' => array(self::BELONGS_TO, 'Empresa', 'empresa'),
-            'equipamento0' => array(self::BELONGS_TO, 'Equipamento', 'equipamento'),
+            'equipamentos' => array(self::MANY_MANY, 'Equipamento', 'simulacao_equipamento(simulacao, equipamento)'),
         );
     }
 
@@ -57,9 +56,8 @@ abstract class BaseSimulacao extends AweActiveRecord {
                 'empresa' => Yii::t('app', 'Empresa'),
                 'data' => Yii::t('app', 'Data'),
                 'consumo_total' => Yii::t('app', 'Consumo Total'),
-                'equipamento' => Yii::t('app', 'Equipamento'),
                 'empresa0' => null,
-                'equipamento0' => null,
+                'equipamentos' => null,
         );
     }
 
@@ -70,7 +68,6 @@ abstract class BaseSimulacao extends AweActiveRecord {
         $criteria->compare('empresa', $this->empresa);
         $criteria->compare('data', $this->data, true);
         $criteria->compare('consumo_total', $this->consumo_total);
-        $criteria->compare('equipamento', $this->equipamento);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
