@@ -8,7 +8,6 @@
 
 ?>
 
-
 <html>
  <head>
  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -19,6 +18,19 @@
  </style>
  <script src="http://maps.google.com/maps/api/js?v=3&sensor=false" type="text/javascript"></script>
  <script type="text/javascript">
+
+  function func(selectedValue){
+    //make the ajax call
+    $.ajax({
+        url: 'ajax/function2.php',
+        type: 'POST',
+        data: {option_mapa : selectedValue},
+        success: function() {
+            console.log("Data sent!");
+        }
+    });
+	window.location.replace("http://localhost/footprint/index.php?r=mapa/index");
+}
  var icon = new google.maps.MarkerImage("http://maps.google.com/mapfiles/ms/micons/blue.png",
  new google.maps.Size(32, 32), new google.maps.Point(0, 0),
  new google.maps.Point(16, 32));
@@ -67,7 +79,16 @@
  });
  
  <?php
-	 $query = "SELECT * FROM empresa";
+	session_start();
+	if(!isset($_SESSION['mapa'])){
+			$mapa = "0";
+		}
+		else{
+			$mapa = $_SESSION['mapa'];
+			//echo $equipamento_display;
+		}
+ 
+	 $query = "SELECT * FROM empresa where cae = $mapa";
 	 $result = mysqli_query($db_connection, $query);
 	 
 	 while ($row = mysqli_fetch_array($result))
@@ -85,5 +106,27 @@
  </script>
  </head>
  <body onload="initMap()" >
+ <?php
+ echo "\tCAE:<br>\n";
+
+		$cae = "SELECT * FROM cae";
+		$result_cae = mysqli_query($db_connection, $cae);
+
+		
+		echo "\t<select  onchange=\"func(this.value)\">\n";
+		echo"\t<option value='0'></option>\n";
+		while ($row = mysqli_fetch_array($result_cae))
+		{
+			$id = $row['id'];
+			$rep = $row ['descricao'];
+			echo"\t<option value='$id'>$rep</option>\n";
+		}
+		echo "\t</select>\n";
+		
+		
+ 
+ 
+ ?>
+ </body>
  <div id="map"></div>
  </html>

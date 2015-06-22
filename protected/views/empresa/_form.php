@@ -1,3 +1,29 @@
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script>
+var geocoder = new google.maps.Geocoder();
+jQuery(document).ready(function($) {
+// Calculate sub-sums on any form changes
+    $("#empresa-form").change(function() {
+	  var lat = document.getElementById('Empresa_latitude').value;
+	  var lng = document.getElementById('Empresa_longitude').value;
+	  var latlng = new google.maps.LatLng(lat, lng);
+	  var loc = document.getElementById('Empresa_localidade');
+	  geocoder.geocode({'latLng': latlng}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+		  if (results[1]) {
+			
+			loc.value = results[1].formatted_address;
+			
+		  } else {
+			alert('No results found');
+		  }
+		} else {
+		  alert('Geocoder failed due to: ' + status);
+		}
+	  });
+	});
+});
+</script>
 <div class="form">
     <?php
     /** @var EmpresaController $this */
