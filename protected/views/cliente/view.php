@@ -22,11 +22,8 @@ $this->menu=array(
 	'data' => $model,
 	'attributes' => array(
         'id',
-        array(
-			'name'=>'utilizador',
-			'value'=>($model->utilizador0 !== null) ? CHtml::link($model->utilizador0, array('/utilizador/view', 'id' => $model->utilizador0->id)).' ' : null,
-			'type'=>'html',
-		),
+        'nome',
+        'password',
         array(
 			'name'=>'empresa',
 			'value'=>($model->empresa0 !== null) ? CHtml::link($model->empresa0, array('/empresa/view', 'id' => $model->empresa0->id)).' ' : null,

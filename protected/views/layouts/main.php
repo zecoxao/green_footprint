@@ -42,20 +42,6 @@
                         
                     ),
                 ));
-            }else if($role -> name == 'Profissional') {
-                $this->widget('zii.widgets.CMenu', array(
-                    'items' => array(
-                        array('url' => Yii::app()->getModule('user')->loginUrl, 'label' => Yii::app()->getModule('user')->t("Login"), 'visible' => Yii::app()->user->isGuest),
-                        array('url' => Yii::app()->getModule('user')->registrationUrl, 'label' => Yii::app()->getModule('user')->t("Register"), 'visible' => Yii::app()->user->isGuest),
-                        array('url' => Yii::app()->getModule('user')->profileUrl, 'label' => Yii::app()->getModule('user')->t("Profile"), 'visible' => !Yii::app()->user->isGuest),
-                        array('url' => Yii::app()->getModule('user')->logoutUrl, 'label' => Yii::app()->getModule('user')->t("Logout") . ' (' . Yii::app()->user->name . ')', 'visible' => !Yii::app()->user->isGuest), 
-						array('label' => 'Rights', 'url' => array('/rights'), 'visible' => Yii::app()->user->checkAccess(Rights::module()->superuserName)), 
-                        array('label' => 'Equipamentos', 'url' => array('/equipamento/index')),  
-                        array('label' => 'Visitas', 'url' => array('/visita/index')),
-						array('label' => 'VisitasEquipamentos', 'url' => array('/visitaEquipamento/index')),
-						array('label' => 'Resultados', 'url' => array('/resultado/index')), 	
-                    ),
-                ));
             }else if($role -> name == 'Admin'){
                 $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
@@ -64,8 +50,7 @@
                         array('url' => Yii::app()->getModule('user')->profileUrl, 'label' => Yii::app()->getModule('user')->t("Profile"), 'visible' => !Yii::app()->user->isGuest),
                         array('url' => Yii::app()->getModule('user')->logoutUrl, 'label' => Yii::app()->getModule('user')->t("Logout") . ' (' . Yii::app()->user->name . ')', 'visible' => !Yii::app()->user->isGuest),
                         array('label' => 'Rights', 'url' => array('/rights'), 'visible' => Yii::app()->user->checkAccess(Rights::module()->superuserName)),
-                        array('label' => 'Clientes', 'url' => array('/cliente/index')),  
-                        array('label' => 'Profissionais', 'url' => array('/profissional/index')),  
+                        array('label' => 'Clientes', 'url' => array('/cliente/index')),
                         array('label' => 'Utilizadores', 'url' => array('/utilizador/index')),  
                     ),
                 ));

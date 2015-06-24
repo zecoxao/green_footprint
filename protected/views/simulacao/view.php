@@ -29,6 +29,8 @@ $this->menu=array(
 		),
         'data',
         'consumo_total',
+        'habitantes',
+        'divisoes',
 	),
 )); ?>
 </fieldset>

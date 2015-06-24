@@ -41,4 +41,28 @@
         </div>
 
         <?php endif; ?>
+                
+        <?php if (!empty($data->habitantes)): ?>
+        <div class="field">
+            <div class="field_name">
+                <b><?php echo CHtml::encode($data->getAttributeLabel('habitantes')); ?>:</b>
+            </div>
+            <div class="field_value">
+                <?php echo CHtml::encode($data->habitantes); ?>
+            </div>
+        </div>
+
+        <?php endif; ?>
+                
+        <?php if (!empty($data->divisoes)): ?>
+        <div class="field">
+            <div class="field_name">
+                <b><?php echo CHtml::encode($data->getAttributeLabel('divisoes')); ?>:</b>
+            </div>
+            <div class="field_value">
+                <?php echo CHtml::encode($data->divisoes); ?>
+            </div>
+        </div>
+
+        <?php endif; ?>
     </div>

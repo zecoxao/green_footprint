@@ -14,6 +14,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php echo $form->textFieldRow($model, 'consumo_total', array('class' => 'span5')); ?>
 
+<?php echo $form->textFieldRow($model, 'habitantes', array('class' => 'span5')); ?>
+
+<?php echo $form->textFieldRow($model, 'divisoes', array('class' => 'span5')); ?>
+
 <div class="form-actions">
     <?php $this->widget('bootstrap.widgets.TbButton', array(
 			'type' => 'primary',

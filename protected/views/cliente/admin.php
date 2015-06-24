@@ -43,11 +43,8 @@ $('.search-form form').submit(function(){
     'filter' => $model,
     'columns' => array(
         'id',
-        array(
-                    'name' => 'utilizador',
-                    'value' => 'isset($data->utilizador0) ? $data->utilizador0 : null',
-                    'filter' => CHtml::listData(Utilizador::model()->findAll(), 'id', Utilizador::representingColumn()),
-                ),
+        'nome',
+        'password',
         array(
                     'name' => 'empresa',
                     'value' => 'isset($data->empresa0) ? $data->empresa0 : null',

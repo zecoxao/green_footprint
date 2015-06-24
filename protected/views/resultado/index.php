@@ -80,86 +80,10 @@ function func5(selectedValue){
 <?php
 	session_start();
 	$role = Rights::getAssignedRoles(Yii::app() -> user -> Id);
+	$user = Yii::app()->user->getName();
 	foreach ($role as $role)
                 $role -> name;
-	if($role -> name == 'Profissional') {
-		echo "
-		<style>
-			#content {
-				width:100%;
-			}
-		</style>
-		";
-
-		echo "
-		<style>
-			#left_div {
-				float:left;width:200px;
-			}
-		</style>
-		";
-
-		echo "\t<div id='left_div'>\n";
-		
-		echo "\tEQUIPAMENTO:<br>\n";
-
-		$equipamento = "SELECT * FROM equipamento";
-		$result_equipamento = mysqli_query($db_connection, $equipamento);
-
-		
-		echo "\t<select  onchange=\"func(this.value)\">\n";
-		echo"\t<option value='0'></option>\n";
-		while ($row = mysqli_fetch_array($result_equipamento))
-		{
-			$id = $row['id'];
-			$rep = $row ['nome'];
-			echo"\t<option value='$id'>$rep</option>\n";
-		}
-		echo "\t</select>\n";
-
-		echo "\t</div>\n";
-		
-		echo "
-		<style>
-			#center_div {
-				margin:0 auto;width:400px;
-			}
-		</style>
-		";
-		
-		echo "\t<div id='center_div'>\n";
-		
-		$equipamento_display=$visita_display="";
-		
-		if(!isset($_SESSION['equipamento_profissional'])){
-			$equipamento_display = "0";
-		}
-		else{
-			$equipamento_display = $_SESSION['equipamento_profissional'];
-			//echo $equipamento_display;
-		}
-		
-		echo "\tVISITA->EQUIPAMENTO:<br>\n";
-		$visita_equipamento = "SELECT * FROM visita_equipamento WHERE equipamento=$equipamento_display";
-		$result_visita_equipamento = mysqli_query($db_connection, $visita_equipamento);
-		
-		while ($row = mysqli_fetch_array($result_visita_equipamento))
-		{
-			$rep = $row ['visita'];
-			$visita_only = "SELECT * FROM visita WHERE id=$rep";
-			$result_visita_only = mysqli_query($db_connection, $visita_only);
-			while ($row2 = mysqli_fetch_array($result_visita_only))
-			{
-				$rep2 = $row2 ['data'];
-				echo"\t$rep2<br>\n";
-			}
-		}
-		
-		
-		
-		echo "\t</div>\n";
-	
-	}else if($role -> name == 'Cliente') {
+	if($role -> name == 'Cliente') {
 
 		echo "
 		<style>
@@ -264,12 +188,12 @@ function func5(selectedValue){
 		}
 		
 		echo "\tEMPRESA->CAE:<br>\n";
-		$empresa_cae = "SELECT * FROM empresa WHERE cae=$cae_display";
+		$empresa_cae = "SELECT empresa.nome as name FROM empresa,cliente,cae WHERE empresa.cae=$cae_display and cliente.nome='$user' and empresa.cae = cae.id and cliente.empresa=empresa.id";
 		$result_empresa_cae = mysqli_query($db_connection, $empresa_cae);
 		
 		while ($row = mysqli_fetch_array($result_empresa_cae))
 		{
-			$rep = $row ['nome'];
+			$rep = $row ['name'];
 			echo"\t$rep<br>\n";
 		}
 		
@@ -282,7 +206,7 @@ function func5(selectedValue){
 		}
 		
 		echo "\tSIMULACAO->EMPRESA:<br>\n";
-		$simulacao_empresa = "SELECT * FROM simulacao WHERE empresa=$empresa_display";
+		$simulacao_empresa = "SELECT consumo_total FROM simulacao,empresa,cliente WHERE simulacao.empresa=$empresa_display and simulacao.empresa=empresa.id and cliente.nome='$user' and empresa.id=cliente.empresa";
 		$result_simulacao_empresa = mysqli_query($db_connection, $simulacao_empresa);
 		
 		while ($row = mysqli_fetch_array($result_simulacao_empresa))
@@ -300,19 +224,13 @@ function func5(selectedValue){
 		}
 		
 		echo "\tSIMULACAO->EQUIPAMENTO:<br>\n";
-		$simulacao_equipamento = "SELECT * FROM simulacao_equipamento WHERE equipamento=$equipamento_display";
+		$simulacao_equipamento = "SELECT consumo_total FROM simulacao_equipamento,simulacao,equipamento,cliente,empresa WHERE simulacao_equipamento.equipamento=$equipamento_display and simulacao_equipamento.simulacao=simulacao.id and simulacao_equipamento.equipamento=equipamento.id and cliente.nome = '$user' and cliente.empresa=empresa.id and simulacao.empresa=empresa.id";
 		$result_simulacao_equipamento = mysqli_query($db_connection, $simulacao_equipamento);
 		
 		while ($row = mysqli_fetch_array($result_simulacao_equipamento))
 		{
-			$rep = $row ['simulacao'];
-			$simulacao_only = "SELECT * FROM simulacao WHERE id=$rep";
-			$result_simulacao_only = mysqli_query($db_connection, $simulacao_only);
-			while ($row2 = mysqli_fetch_array($result_simulacao_only))
-			{
-				$rep2 = $row2 ['consumo_total'];
-				echo"\t$rep2<br>\n";
-			}
+			$rep2 = $row ['consumo_total'];
+			echo"\t$rep2<br>\n";			
 		}
 		
 		if(!isset($_SESSION['potencia_cliente'])){
@@ -324,17 +242,17 @@ function func5(selectedValue){
 		}
 		
 		echo "\tEQUIPAMENTO->POTENCIA:<br>\n";
-		$equipamento_potencia = "SELECT * FROM equipamento WHERE potencia=$potencia_display";
+		$equipamento_potencia = "SELECT equipamento.nome as name FROM simulacao_equipamento,simulacao,equipamento,cliente,empresa,potencia WHERE simulacao_equipamento.simulacao=simulacao.id AND equipamento.potencia=potencia.id AND simulacao_equipamento.equipamento=equipamento.id AND cliente.nome = '$user' AND cliente.empresa=empresa.id AND simulacao.empresa=empresa.id AND potencia.id=$potencia_display";
 		$result_equipamento_potencia = mysqli_query($db_connection, $equipamento_potencia);
 		
 		while ($row = mysqli_fetch_array($result_equipamento_potencia))
 		{
-			$rep = $row ['nome'];
+			$rep = $row ['name'];
 			echo"\t$rep<br>\n";
 		}
 		
 		echo "\tSIMULACAO->(EQUIPAMENTO,EMPRESA):<br>\n";
-		$simulacao_double = "SELECT * FROM simulacao WHERE empresa=$empresa_display";
+		$simulacao_double = "SELECT consumo_total FROM simulacao_equipamento,simulacao,equipamento,cliente,empresa WHERE simulacao.empresa=$empresa_display and simulacao_equipamento.equipamento=$equipamento_display AND simulacao_equipamento.simulacao=simulacao.id AND simulacao_equipamento.equipamento=equipamento.id AND cliente.nome = '$user' AND cliente.empresa=empresa.id AND simulacao.empresa=empresa.id";
 		$result_simulacao_double = mysqli_query($db_connection, $simulacao_double);
 		
 		while ($row = mysqli_fetch_array($result_simulacao_double))

@@ -50,6 +50,8 @@ $('.search-form form').submit(function(){
                 ),
         'data',
         'consumo_total',
+        'habitantes',
+        'divisoes',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 		),

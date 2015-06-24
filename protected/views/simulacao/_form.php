@@ -16,7 +16,7 @@
     <?php echo $form->errorSummary($model) ?>
 
                             <?php echo $form->dropDownListRow($model, 'empresa', CHtml::listData(Empresa::model()->findAll(), 'id', Empresa::representingColumn())) ?>
-                       <?php echo $form->datepickerRow($model, 'data', array(
+                         <?php echo $form->datepickerRow($model, 'data', array(
 					                'options' => array(
 					                    'language' => 'en',
 					                    'format' => 'yyyy-mm-dd', 
@@ -26,6 +26,8 @@
 				                ), 
 				            ), array('prepend'=>'<i class="icon-calendar"></i>')) ?>
                         <?php echo $form->textFieldRow($model, 'consumo_total', array('class' => 'span5')) ?>
+                        <?php echo $form->textFieldRow($model, 'habitantes', array('class' => 'span5')) ?>
+                        <?php echo $form->textFieldRow($model, 'divisoes', array('class' => 'span5')) ?>
             <div class="row nm_row">
 <label for="equipamentos"><?php echo Yii::t('app', 'Equipamentos'); ?></label>
 <?php echo CHtml::checkBoxList('Simulacao[equipamentos]', array_map('AweHtml::getPrimaryKey', $model->equipamentos),
