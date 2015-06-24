@@ -15,10 +15,10 @@ jQuery(document).ready(function($) {
 			loc.value = results[1].formatted_address;
 			
 		  } else {
-			alert('No results found');
+			//alert('No results found');
 		  }
 		} else {
-		  alert('Geocoder failed due to: ' + status);
+		  //alert('Geocoder failed due to: ' + status);
 		}
 	  });
 	});

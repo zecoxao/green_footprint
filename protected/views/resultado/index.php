@@ -106,7 +106,7 @@ function func5(selectedValue){
 		$cae = "SELECT * FROM cae";
 		$result_cae = mysqli_query($db_connection, $cae);
 
-		echo "\tCAE:<br>\n";
+		echo "\tCAE(Media):<br>\n";
 		
 		echo "\t<select onchange=\"func2(this.value)\">\n";
 		echo"\t<option value='0'></option>\n";
@@ -114,7 +114,8 @@ function func5(selectedValue){
 		{
 			$id = $row['id'];
 			$rep = $row ['descricao'];
-			echo"\t<option value='$id'>$rep</option>\n";
+			$rep2 =$row ['media'];
+			echo"\t<option value='$id'>$rep-$rep2</option>\n";
 		}
 		echo "\t</select>\n";
 		
@@ -179,12 +180,12 @@ function func5(selectedValue){
 		echo "\t<div id='center_div'>\n";
 		
 		$cae_display=$empresa_display=$equipamento_display=$potencia_display=$simulacao_display="";
+		$media=0;
 		if(!isset($_SESSION['cae_cliente'])){
 			$cae_display = "0";
 		}
 		else{
 			$cae_display = $_SESSION['cae_cliente'];
-			//echo $equipamento_display;
 		}
 		
 		echo "\tEMPRESA->CAE:<br>\n";
@@ -205,14 +206,27 @@ function func5(selectedValue){
 			//echo $equipamento_display;
 		}
 		
-		echo "\tSIMULACAO->EMPRESA:<br>\n";
-		$simulacao_empresa = "SELECT consumo_total FROM simulacao,empresa,cliente WHERE simulacao.empresa=$empresa_display and simulacao.empresa=empresa.id and cliente.nome='$user' and empresa.id=cliente.empresa";
+		echo "\tSIMULACAO->EMPRESA (Acima da media):<br>\n";
+		$simulacao_empresa = "SELECT consumo_total FROM simulacao,empresa,cliente,cae WHERE empresa.cae = cae.id AND cliente.empresa=empresa.id AND cae.id=$cae_display AND simulacao.empresa=$empresa_display AND simulacao.empresa=empresa.id AND cliente.nome='$user' AND empresa.id=cliente.empresa AND consumo_total >= (SELECT media FROM cae WHERE id = $cae_display)";
 		$result_simulacao_empresa = mysqli_query($db_connection, $simulacao_empresa);
 		
 		while ($row = mysqli_fetch_array($result_simulacao_empresa))
 		{
 			$rep = $row ['consumo_total'];
-			echo"\t$rep<br>\n";
+			
+			echo"\t $rep <br>\n";
+			
+		}
+		
+		echo "\tSIMULACAO->EMPRESA (Abaixo da media):<br>\n";
+		$simulacao_empresa3 = "SELECT consumo_total FROM simulacao,empresa,cliente,cae WHERE empresa.cae = cae.id AND cliente.empresa=empresa.id AND cae.id=$cae_display AND simulacao.empresa=$empresa_display AND simulacao.empresa=empresa.id AND cliente.nome='$user' AND empresa.id=cliente.empresa AND consumo_total < (SELECT media FROM cae WHERE id = $cae_display)";
+		$result_simulacao_empresa3 = mysqli_query($db_connection, $simulacao_empresa3);
+		
+		while ($row3 = mysqli_fetch_array($result_simulacao_empresa3))
+		{
+			$rep3 = $row3 ['consumo_total'];
+			echo"\t $rep3 <br>\n";
+			
 		}
 		
 		if(!isset($_SESSION['equipamento_cliente'])){

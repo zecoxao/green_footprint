@@ -10,6 +10,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php echo $form->textFieldRow($model, 'descricao', array('class' => 'span5', 'maxlength' => 50)); ?>
 
+<?php echo $form->textFieldRow($model, 'media', array('class' => 'span5')); ?>
+
 <div class="form-actions">
     <?php $this->widget('bootstrap.widgets.TbButton', array(
 			'type' => 'primary',

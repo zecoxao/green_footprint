@@ -23,6 +23,7 @@ $this->menu=array(
 	'attributes' => array(
         'id',
         'descricao',
+        'media',
 	),
 )); ?>
 </fieldset>
