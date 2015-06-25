@@ -10,6 +10,8 @@ else{
 }
 if($_REQUEST['option2']){
 	$_SESSION['cae_cliente']="0";
+	
+	
 	$_SESSION['cae_cliente']=$_REQUEST['option2'];
 	//echo $_SESSION['equipamento_profissional'];
 }

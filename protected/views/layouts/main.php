@@ -51,7 +51,6 @@
                         array('url' => Yii::app()->getModule('user')->logoutUrl, 'label' => Yii::app()->getModule('user')->t("Logout") . ' (' . Yii::app()->user->name . ')', 'visible' => !Yii::app()->user->isGuest),
                         array('label' => 'Rights', 'url' => array('/rights'), 'visible' => Yii::app()->user->checkAccess(Rights::module()->superuserName)),
                         array('label' => 'Clientes', 'url' => array('/cliente/index')),
-                        array('label' => 'Utilizadores', 'url' => array('/utilizador/index')),  
                     ),
                 ));
             }else if($role -> name == 'Cliente') {

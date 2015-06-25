@@ -11,13 +11,14 @@
  *
  * @property integer $id
  * @property string $nome
+ * @property double $latitude
+ * @property double $longitude
  * @property string $localidade
  * @property integer $cae
  *
  * @property Cliente[] $clientes
  * @property Cae $cae0
  * @property Simulacao[] $simulacaos
- * @property Visita[] $visitas
  */
 abstract class BaseEmpresa extends AweActiveRecord {
 
@@ -37,8 +38,10 @@ abstract class BaseEmpresa extends AweActiveRecord {
         return array(
             array('nome, localidade, cae', 'required'),
             array('cae', 'numerical', 'integerOnly'=>true),
+            array('latitude, longitude', 'numerical'),
             array('nome, localidade', 'length', 'max'=>50),
-            array('id, nome, localidade, cae', 'safe', 'on'=>'search'),
+            array('latitude, longitude', 'default', 'setOnEmpty' => true, 'value' => null),
+            array('id, nome, latitude, longitude, localidade, cae', 'safe', 'on'=>'search'),
         );
     }
 
@@ -47,7 +50,6 @@ abstract class BaseEmpresa extends AweActiveRecord {
             'clientes' => array(self::HAS_MANY, 'Cliente', 'empresa'),
             'cae0' => array(self::BELONGS_TO, 'Cae', 'cae'),
             'simulacaos' => array(self::HAS_MANY, 'Simulacao', 'empresa'),
-            'visitas' => array(self::HAS_MANY, 'Visita', 'empresa'),
         );
     }
 
@@ -58,12 +60,13 @@ abstract class BaseEmpresa extends AweActiveRecord {
         return array(
                 'id' => Yii::t('app', 'ID'),
                 'nome' => Yii::t('app', 'Nome'),
+                'latitude' => Yii::t('app', 'Latitude'),
+                'longitude' => Yii::t('app', 'Longitude'),
                 'localidade' => Yii::t('app', 'Localidade'),
                 'cae' => Yii::t('app', 'Cae'),
                 'clientes' => null,
                 'cae0' => null,
                 'simulacaos' => null,
-                'visitas' => null,
         );
     }
 
@@ -72,6 +75,8 @@ abstract class BaseEmpresa extends AweActiveRecord {
 
         $criteria->compare('id', $this->id);
         $criteria->compare('nome', $this->nome, true);
+        $criteria->compare('latitude', $this->latitude);
+        $criteria->compare('longitude', $this->longitude);
         $criteria->compare('localidade', $this->localidade, true);
         $criteria->compare('cae', $this->cae);
 

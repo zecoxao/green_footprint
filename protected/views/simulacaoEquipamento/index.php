@@ -1,18 +1,22 @@
-<!--Generated using Gimme CRUD freeware from www.HandsOnCoding.net -->
 <?php
-$this->breadcrumbs=array(
-	'SimulacaoEquipamentos',
+/** @var SimulacaoEquipamentoController $this */
+/** @var SimulacaoEquipamento $model */
+$this->breadcrumbs = array(
+	'Simulacao Equipamentos',
 );
 
-$this->menu=array(
-	array('label'=>'Create SimulacaoEquipamento', 'url'=>array('create')),
-	array('label'=>'Manage SimulacaoEquipamento', 'url'=>array('admin')),
+$this->menu = array(
+    array('label' => Yii::t('AweCrud.app', 'Create') . ' ' . SimulacaoEquipamento::label(), 'icon' => 'plus', 'url' => array('create')),
+    array('label' => Yii::t('AweCrud.app', 'Manage'), 'icon' => 'list-alt', 'url' => array('admin')),
 );
 ?>
 
-<h1>SimulacaoEquipamentos</h1>
+<fieldset>
+    <legend>
+        <?php echo Yii::t('AweCrud.app', 'List') ?> <?php echo SimulacaoEquipamento::label(2) ?>    </legend>
 
-<?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+<?php $this->widget('bootstrap.widgets.TbListView',array(
+	'dataProvider' => $dataProvider,
+	'itemView' => '_view',
 )); ?>
+</fieldset>

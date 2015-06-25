@@ -1,19 +1,22 @@
-<!--Generated using Gimme CRUD freeware from www.HandsOnCoding.net -->
 <?php
+/** @var SimulacaoEquipamentoController $this */
+/** @var SimulacaoEquipamento $model */
 $this->breadcrumbs=array(
-	'SimulacaoEquipamentos'=>array('index'),
-	'View'=>array('view', 'simulacao'=>$model->simulacao, 'equipamento'=>$model->equipamento),
-	'Update',
+	$model->label(2) => array('index'),
+	Yii::t('app', $model->id) => array('view', 'id'=>$model->id),
+	Yii::t('AweCrud.app', 'Update'),
 );
 
 $this->menu=array(
-	array('label'=>'List SimulacaoEquipamento', 'url'=>array('index')),
-	array('label'=>'Create SimulacaoEquipamento', 'url'=>array('create')),
-	array('label'=>'View SimulacaoEquipamento', 'url'=>array('view', 'simulacao'=>$model->simulacao, 'equipamento'=>$model->equipamento)),
-	array('label'=>'Manage SimulacaoEquipamento', 'url'=>array('admin')),
-); 
+    //array('label' => Yii::t('AweCrud.app', 'List') . ' ' . SimulacaoEquipamento::label(2), 'icon' => 'list', 'url' => array('index')),
+	//array('label' => Yii::t('AweCrud.app', 'Create') . ' ' . SimulacaoEquipamento::label(), 'icon' => 'plus', 'url' => array('create')),
+	//array('label' => Yii::t('AweCrud.app', 'View'), 'icon' => 'eye-open', 'url'=>array('view', 'id' => $model->id)),
+    array('label' => Yii::t('AweCrud.app', 'Delete'), 'icon' => 'trash', 'url'=>'#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => Yii::t('AweCrud.app', 'Are you sure you want to delete this item?'))),
+	array('label' => Yii::t('AweCrud.app', 'Manage'), 'icon' => 'list-alt', 'url' => array('admin')),
+);
 ?>
 
-<h1>Update Client</h1>
-
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<fieldset>
+    <legend><?php echo Yii::t('AweCrud.app', 'Update') . ' ' . SimulacaoEquipamento::label(); ?> <?php echo CHtml::encode($model) ?></legend>
+    <?php echo $this->renderPartial('_form',array('model' => $model)); ?>
+</fieldset>

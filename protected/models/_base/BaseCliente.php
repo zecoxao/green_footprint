@@ -10,10 +10,10 @@
  * followed by relations of table "cliente" available as properties of the model.
  *
  * @property integer $id
- * @property integer $utilizador
+ * @property string $nome
+ * @property string $password
  * @property integer $empresa
  *
- * @property Utilizador $utilizador0
  * @property Empresa $empresa0
  */
 abstract class BaseCliente extends AweActiveRecord {
@@ -27,20 +27,20 @@ abstract class BaseCliente extends AweActiveRecord {
     }
 
     public static function representingColumn() {
-        return 'id';
+        return 'nome';
     }
 
     public function rules() {
         return array(
-            array('utilizador, empresa', 'required'),
-            array('utilizador, empresa', 'numerical', 'integerOnly'=>true),
-            array('id, utilizador, empresa', 'safe', 'on'=>'search'),
+            array('nome, password, empresa', 'required'),
+            array('empresa', 'numerical', 'integerOnly'=>true),
+            array('nome, password', 'length', 'max'=>50),
+            array('id, nome, password, empresa', 'safe', 'on'=>'search'),
         );
     }
 
     public function relations() {
         return array(
-            'utilizador0' => array(self::BELONGS_TO, 'Utilizador', 'utilizador'),
             'empresa0' => array(self::BELONGS_TO, 'Empresa', 'empresa'),
         );
     }
@@ -51,9 +51,9 @@ abstract class BaseCliente extends AweActiveRecord {
     public function attributeLabels() {
         return array(
                 'id' => Yii::t('app', 'ID'),
-                'utilizador' => Yii::t('app', 'Utilizador'),
+                'nome' => Yii::t('app', 'Nome'),
+                'password' => Yii::t('app', 'Password'),
                 'empresa' => Yii::t('app', 'Empresa'),
-                'utilizador0' => null,
                 'empresa0' => null,
         );
     }
@@ -62,7 +62,8 @@ abstract class BaseCliente extends AweActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('utilizador', $this->utilizador);
+        $criteria->compare('nome', $this->nome, true);
+        $criteria->compare('password', $this->password, true);
         $criteria->compare('empresa', $this->empresa);
 
         return new CActiveDataProvider($this, array(

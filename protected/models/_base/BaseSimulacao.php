@@ -13,6 +13,8 @@
  * @property integer $empresa
  * @property string $data
  * @property double $consumo_total
+ * @property integer $habitantes
+ * @property integer $divisoes
  *
  * @property Empresa $empresa0
  * @property Equipamento[] $equipamentos
@@ -33,10 +35,10 @@ abstract class BaseSimulacao extends AweActiveRecord {
 
     public function rules() {
         return array(
-            array('empresa, data, consumo_total', 'required'),
-            array('empresa', 'numerical', 'integerOnly'=>true),
+            array('empresa, data, consumo_total, habitantes, divisoes', 'required'),
+            array('empresa, habitantes, divisoes', 'numerical', 'integerOnly'=>true),
             array('consumo_total', 'numerical'),
-            array('id, empresa, data, consumo_total', 'safe', 'on'=>'search'),
+            array('id, empresa, data, consumo_total, habitantes, divisoes', 'safe', 'on'=>'search'),
         );
     }
 
@@ -56,6 +58,8 @@ abstract class BaseSimulacao extends AweActiveRecord {
                 'empresa' => Yii::t('app', 'Empresa'),
                 'data' => Yii::t('app', 'Data'),
                 'consumo_total' => Yii::t('app', 'Consumo Total'),
+                'habitantes' => Yii::t('app', 'Habitantes'),
+                'divisoes' => Yii::t('app', 'Divisoes'),
                 'empresa0' => null,
                 'equipamentos' => null,
         );
@@ -68,6 +72,8 @@ abstract class BaseSimulacao extends AweActiveRecord {
         $criteria->compare('empresa', $this->empresa);
         $criteria->compare('data', $this->data, true);
         $criteria->compare('consumo_total', $this->consumo_total);
+        $criteria->compare('habitantes', $this->habitantes);
+        $criteria->compare('divisoes', $this->divisoes);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

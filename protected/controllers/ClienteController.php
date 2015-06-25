@@ -8,14 +8,6 @@ class ClienteController extends RController
 	 */
     public $layout = '//layouts/column2';
 
-	
-	public function filters()
-    {
-        return array(
-            'rights', // perform access control for CRUD operations
- 
-        );
-    }
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -26,6 +18,14 @@ class ClienteController extends RController
 			'model' => $this->loadModel($id),
 		));
 	}
+	
+	public function filters()
+    {
+        return array(
+            'rights', // perform access control for CRUD operations
+ 
+        );
+    }
 
 	/**
 	 * Creates a new model.

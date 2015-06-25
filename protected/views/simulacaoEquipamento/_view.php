@@ -1,13 +1,30 @@
-<!--Generated using Gimme CRUD freeware from www.HandsOnCoding.net -->
+<?php
+/** @var SimulacaoEquipamentoController $this */
+/** @var SimulacaoEquipamento $data */
+?>
 <div class="view">
-	<b>
-	<?php echo CHtml::link(">> ", array('view', 
-	'simulacao'=>$data->simulacao, 'equipamento'=>$data->equipamento)); ?><br/></b>
-	
-	
-    <b><?php echo CHtml::encode($data->getAttributeLabel('simulacao')); ?>:</b>
-	<?php echo CHtml::encode($data->simulacao); ?><br />
-	
-    <b><?php echo CHtml::encode($data->getAttributeLabel('equipamento')); ?>:</b>
-	<?php echo CHtml::encode($data->equipamento); ?><br />
-</div>
+                    
+        <?php if (!empty($data->simulacao0->data)): ?>
+        <div class="field">
+            <div class="field_name">
+                <b><?php echo CHtml::encode($data->getAttributeLabel('simulacao')); ?>:</b>
+            </div>
+            <div class="field_value">
+                <?php echo CHtml::encode($data->simulacao0->data); ?>
+            </div>
+        </div>
+
+        <?php endif; ?>
+                
+        <?php if (!empty($data->equipamento0->nome)): ?>
+        <div class="field">
+            <div class="field_name">
+                <b><?php echo CHtml::encode($data->getAttributeLabel('equipamento')); ?>:</b>
+            </div>
+            <div class="field_value">
+                <?php echo CHtml::encode($data->equipamento0->nome); ?>
+            </div>
+        </div>
+
+        <?php endif; ?>
+    </div>

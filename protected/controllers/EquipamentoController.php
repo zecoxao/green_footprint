@@ -21,9 +21,12 @@ class EquipamentoController extends RController
 	 */
 	public function actionView($id)
 	{
+		$child_model = new SimulacaoEquipamento("search");
 		$this->render('view', array(
-			'model' => $this->loadModel($id),
-		));
+            'model' => $this->loadModel($id),
+            'child_model' => $child_model,
+            'parentID' => $id
+        ));
 	}
 
 	/**

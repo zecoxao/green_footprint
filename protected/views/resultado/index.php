@@ -80,7 +80,14 @@ function func5(selectedValue){
 <?php
 	session_start();
 	$role = Rights::getAssignedRoles(Yii::app() -> user -> Id);
-	$user = Yii::app()->user->getName();
+	$user = Yii::app()->user->getId();
+	$my_custom_sql = "SELECT username FROM users WHERE id=$user";
+	$result_my_custom_sql = mysqli_query($db_connection, $my_custom_sql);		
+	$rep_my_custom_sql="";
+	if ($row_my_custom_sql = mysqli_fetch_array($result_my_custom_sql))
+	{
+		$rep_my_custom_sql = $row_my_custom_sql ['username'];
+	}
 	foreach ($role as $role)
                 $role -> name;
 	if($role -> name == 'Cliente') {
@@ -180,16 +187,24 @@ function func5(selectedValue){
 		echo "\t<div id='center_div'>\n";
 		
 		$cae_display=$empresa_display=$equipamento_display=$potencia_display=$simulacao_display="";
-		$media=0;
+		$media=0.0;
 		if(!isset($_SESSION['cae_cliente'])){
 			$cae_display = "0";
 		}
+		
 		else{
 			$cae_display = $_SESSION['cae_cliente'];
+			$my_custom_sql2 = "SELECT media FROM cae WHERE id=$cae_display";
+			$result_my_custom_sql2 = mysqli_query($db_connection, $my_custom_sql2);		
+			$rep_my_custom_sql2="";
+			if ($row_my_custom_sql2 = mysqli_fetch_array($result_my_custom_sql2))
+			{
+				$media = $row_my_custom_sql2 ['media'];
+			}
 		}
 		
 		echo "\tEMPRESA->CAE:<br>\n";
-		$empresa_cae = "SELECT empresa.nome as name FROM empresa,cliente,cae WHERE empresa.cae=$cae_display and cliente.nome='$user' and empresa.cae = cae.id and cliente.empresa=empresa.id";
+		$empresa_cae = "SELECT empresa.nome as name FROM empresa,cliente,cae WHERE empresa.cae=$cae_display and cliente.nome='$rep_my_custom_sql' and empresa.cae = cae.id and cliente.empresa=empresa.id";
 		$result_empresa_cae = mysqli_query($db_connection, $empresa_cae);
 		
 		while ($row = mysqli_fetch_array($result_empresa_cae))
@@ -207,25 +222,27 @@ function func5(selectedValue){
 		}
 		
 		echo "\tSIMULACAO->EMPRESA (Acima da media):<br>\n";
-		$simulacao_empresa = "SELECT consumo_total FROM simulacao,empresa,cliente,cae WHERE empresa.cae = cae.id AND cliente.empresa=empresa.id AND cae.id=$cae_display AND simulacao.empresa=$empresa_display AND simulacao.empresa=empresa.id AND cliente.nome='$user' AND empresa.id=cliente.empresa AND consumo_total >= (SELECT media FROM cae WHERE id = $cae_display)";
+		$simulacao_empresa = "SELECT consumo_total FROM simulacao,empresa,cliente,cae WHERE empresa.cae = cae.id AND cliente.empresa=empresa.id AND cae.id=$cae_display AND simulacao.empresa=$empresa_display AND simulacao.empresa=empresa.id AND cliente.nome='$rep_my_custom_sql' AND empresa.id=cliente.empresa AND consumo_total >= (SELECT media FROM cae WHERE id = $cae_display)";
 		$result_simulacao_empresa = mysqli_query($db_connection, $simulacao_empresa);
 		
 		while ($row = mysqli_fetch_array($result_simulacao_empresa))
 		{
 			$rep = $row ['consumo_total'];
+			$percent=(($rep/$media)*100)-100;
 			
-			echo"\t $rep <br>\n";
+			echo"\t<div id='upper_ng' style=font-size:x-large>$rep <-> $percent%</div><img src='./images/ng.jpg' style=width:128px;height:128px;></img> <br>\n";
 			
 		}
 		
 		echo "\tSIMULACAO->EMPRESA (Abaixo da media):<br>\n";
-		$simulacao_empresa3 = "SELECT consumo_total FROM simulacao,empresa,cliente,cae WHERE empresa.cae = cae.id AND cliente.empresa=empresa.id AND cae.id=$cae_display AND simulacao.empresa=$empresa_display AND simulacao.empresa=empresa.id AND cliente.nome='$user' AND empresa.id=cliente.empresa AND consumo_total < (SELECT media FROM cae WHERE id = $cae_display)";
+		$simulacao_empresa3 = "SELECT consumo_total FROM simulacao,empresa,cliente,cae WHERE empresa.cae = cae.id AND cliente.empresa=empresa.id AND cae.id=$cae_display AND simulacao.empresa=$empresa_display AND simulacao.empresa=empresa.id AND cliente.nome='$rep_my_custom_sql' AND empresa.id=cliente.empresa AND consumo_total < (SELECT media FROM cae WHERE id = $cae_display)";
 		$result_simulacao_empresa3 = mysqli_query($db_connection, $simulacao_empresa3);
 		
 		while ($row3 = mysqli_fetch_array($result_simulacao_empresa3))
 		{
 			$rep3 = $row3 ['consumo_total'];
-			echo"\t $rep3 <br>\n";
+			$percent=(($rep3/$media)*100)-100;
+			echo"\t<div id='lower_ok' style=font-size:x-large>$rep <-> $percent%</div><img src='./images/ok.jpg' style=width:128px;height:128px;></img> <br>\n";
 			
 		}
 		
@@ -238,7 +255,7 @@ function func5(selectedValue){
 		}
 		
 		echo "\tSIMULACAO->EQUIPAMENTO:<br>\n";
-		$simulacao_equipamento = "SELECT consumo_total FROM simulacao_equipamento,simulacao,equipamento,cliente,empresa WHERE simulacao_equipamento.equipamento=$equipamento_display and simulacao_equipamento.simulacao=simulacao.id and simulacao_equipamento.equipamento=equipamento.id and cliente.nome = '$user' and cliente.empresa=empresa.id and simulacao.empresa=empresa.id";
+		$simulacao_equipamento = "SELECT consumo_total FROM simulacao_equipamento,simulacao,equipamento,cliente,empresa WHERE simulacao_equipamento.equipamento=$equipamento_display and simulacao_equipamento.simulacao=simulacao.id and simulacao_equipamento.equipamento=equipamento.id and cliente.nome ='$rep_my_custom_sql' and cliente.empresa=empresa.id and simulacao.empresa=empresa.id";
 		$result_simulacao_equipamento = mysqli_query($db_connection, $simulacao_equipamento);
 		
 		while ($row = mysqli_fetch_array($result_simulacao_equipamento))
@@ -256,7 +273,7 @@ function func5(selectedValue){
 		}
 		
 		echo "\tEQUIPAMENTO->POTENCIA:<br>\n";
-		$equipamento_potencia = "SELECT equipamento.nome as name FROM simulacao_equipamento,simulacao,equipamento,cliente,empresa,potencia WHERE simulacao_equipamento.simulacao=simulacao.id AND equipamento.potencia=potencia.id AND simulacao_equipamento.equipamento=equipamento.id AND cliente.nome = '$user' AND cliente.empresa=empresa.id AND simulacao.empresa=empresa.id AND potencia.id=$potencia_display";
+		$equipamento_potencia = "SELECT equipamento.nome as name FROM simulacao_equipamento,simulacao,equipamento,cliente,empresa,potencia WHERE simulacao_equipamento.simulacao=simulacao.id AND equipamento.potencia=potencia.id AND simulacao_equipamento.equipamento=equipamento.id AND cliente.nome ='$rep_my_custom_sql' AND cliente.empresa=empresa.id AND simulacao.empresa=empresa.id AND potencia.id=$potencia_display";
 		$result_equipamento_potencia = mysqli_query($db_connection, $equipamento_potencia);
 		
 		while ($row = mysqli_fetch_array($result_equipamento_potencia))
@@ -266,7 +283,7 @@ function func5(selectedValue){
 		}
 		
 		echo "\tSIMULACAO->(EQUIPAMENTO,EMPRESA):<br>\n";
-		$simulacao_double = "SELECT consumo_total FROM simulacao_equipamento,simulacao,equipamento,cliente,empresa WHERE simulacao.empresa=$empresa_display and simulacao_equipamento.equipamento=$equipamento_display AND simulacao_equipamento.simulacao=simulacao.id AND simulacao_equipamento.equipamento=equipamento.id AND cliente.nome = '$user' AND cliente.empresa=empresa.id AND simulacao.empresa=empresa.id";
+		$simulacao_double = "SELECT consumo_total FROM simulacao_equipamento,simulacao,equipamento,cliente,empresa WHERE simulacao.empresa=$empresa_display and simulacao_equipamento.equipamento=$equipamento_display AND simulacao_equipamento.simulacao=simulacao.id AND simulacao_equipamento.equipamento=equipamento.id AND cliente.nome ='$rep_my_custom_sql' AND cliente.empresa=empresa.id AND simulacao.empresa=empresa.id";
 		$result_simulacao_double = mysqli_query($db_connection, $simulacao_double);
 		
 		while ($row = mysqli_fetch_array($result_simulacao_double))
@@ -277,4 +294,5 @@ function func5(selectedValue){
 		
 		echo "\t</div>\n";
 	}
+	
 ?>

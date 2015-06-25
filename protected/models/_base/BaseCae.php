@@ -11,6 +11,7 @@
  *
  * @property integer $id
  * @property string $descricao
+ * @property double $media
  *
  * @property Empresa[] $empresas
  */
@@ -30,9 +31,10 @@ abstract class BaseCae extends AweActiveRecord {
 
     public function rules() {
         return array(
-            array('descricao', 'required'),
+            array('descricao, media', 'required'),
+            array('media', 'numerical'),
             array('descricao', 'length', 'max'=>50),
-            array('id, descricao', 'safe', 'on'=>'search'),
+            array('id, descricao, media', 'safe', 'on'=>'search'),
         );
     }
 
@@ -49,6 +51,7 @@ abstract class BaseCae extends AweActiveRecord {
         return array(
                 'id' => Yii::t('app', 'ID'),
                 'descricao' => Yii::t('app', 'Descricao'),
+                'media' => Yii::t('app', 'Media'),
                 'empresas' => null,
         );
     }
@@ -58,6 +61,7 @@ abstract class BaseCae extends AweActiveRecord {
 
         $criteria->compare('id', $this->id);
         $criteria->compare('descricao', $this->descricao, true);
+        $criteria->compare('media', $this->media);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

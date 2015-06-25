@@ -1,8 +1,23 @@
-
 <?php
+
 class SimulacaoEquipamentoController extends RController
 {
-	public $layout='//layouts/column2';
+	/**
+	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
+	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 */
+    public $layout = '//layouts/column2';
+
+	/**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionView($id)
+	{
+		$this->render('view', array(
+			'model' => $this->loadModel($id),
+		));
+	}
 	
 	public function filters()
     {
@@ -11,144 +26,123 @@ class SimulacaoEquipamentoController extends RController
  
         );
     }
-	
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('SimulacaoEquipamento');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-	
-	public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
 
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
 	public function actionCreate()
 	{
-	    $model=new SimulacaoEquipamento;
+		$model = new SimulacaoEquipamento;
 
-	    if(isset($_POST['ajax']) && $_POST['ajax']==='client-account-create-form')
-	    {
-	        echo CActiveForm::validate($model);
-	        Yii::app()->end();
-	    }
+        $this->performAjaxValidation($model, 'simulacao-equipamento-form');
 
-	    if(isset($_POST['SimulacaoEquipamento']))
-	    {
-	        $model->attributes=$_POST['SimulacaoEquipamento'];
-	        if($model->validate())
-	        {
-				$this->saveModel($model);
-				$this->redirect(array('view','simulacao'=>$model->simulacao, 'equipamento'=>$model->equipamento));
-	        }
-	    }
-	    $this->render('create',array('model'=>$model));
-	} 
-	
-	public function actionDelete($simulacao, $equipamento)
-	{
-		if(Yii::app()->request->isPostRequest)
+        if(isset($_POST['SimulacaoEquipamento']))
 		{
-			try
-			{
-				// we only allow deletion via POST request
-				$this->loadModel($simulacao, $equipamento)->delete();
-			}
-			catch(Exception $e) 
-			{
-				$this->showError($e);
-			}
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+			$model->attributes = $_POST['SimulacaoEquipamento'];
+			if($model->save()) {
+                $this->redirect(array('view', 'id' => $model->id));
+            }
 		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-	}
-	
-	public function actionUpdate($simulacao, $equipamento)
-	{
-		$model=$this->loadModel($simulacao, $equipamento);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->render('create',array(
+			'model' => $model,
+		));
+	}
+
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionUpdate($id)
+	{
+		$model = $this->loadModel($id);
+
+        $this->performAjaxValidation($model, 'simulacao-equipamento-form');
 
 		if(isset($_POST['SimulacaoEquipamento']))
 		{
-			$model->attributes=$_POST['SimulacaoEquipamento'];
-			$this->saveModel($model);
-			$this->redirect(array('view',
-	                    'simulacao'=>$model->simulacao, 'equipamento'=>$model->equipamento));
+			$model->attributes = $_POST['SimulacaoEquipamento'];
+			if($model->save()) {
+				$this->redirect(array('view','id' => $model->id));
+            }
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+			'model' => $model,
 		));
 	}
-	
+
+	/**
+	 * Deletes a particular model.
+	 * If deletion is successful, the browser will be redirected to the 'admin' page.
+	 * @param integer $id the ID of the model to be deleted
+	 */
+	public function actionDelete($id)
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
+
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+			throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+	}
+
+	/**
+	 * Lists all models.
+	 */
+	public function actionIndex()
+	{
+		$dataProvider=new CActiveDataProvider('SimulacaoEquipamento');
+		$this->render('index', array(
+			'dataProvider' => $dataProvider,
+		));
+	}
+
+	/**
+	 * Manages all models.
+	 */
 	public function actionAdmin()
 	{
-		$model=new SimulacaoEquipamento('search');
-		$model->unsetAttributes();  // clear any default values
+		$model = new SimulacaoEquipamento('search');
+		$model->unsetAttributes(); // clear any default values
 		if(isset($_GET['SimulacaoEquipamento']))
-			$model->attributes=$_GET['SimulacaoEquipamento'];
+			$model->attributes = $_GET['SimulacaoEquipamento'];
 
-		$this->render('admin',array(
-			'model'=>$model,
+		$this->render('admin', array(
+			'model' => $model,
 		));
 	}
-	
-	public function actionView($simulacao, $equipamento)
-	{		
-		$model=$this->loadModel($simulacao, $equipamento);
-		$this->render('view',array('model'=>$model));
-	}
-	
-	public function loadModel($simulacao, $equipamento)
+
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer the ID of the model to be loaded
+	 */
+	public function loadModel($id, $modelClass=__CLASS__)
 	{
-		$model=SimulacaoEquipamento::model()->findByPk(array('simulacao'=>$simulacao, 'equipamento'=>$equipamento));
-		if($model==null)
+		$model = SimulacaoEquipamento::model()->findByPk($id);
+		if($model === null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
 
-	public function saveModel($model)
+	/**
+	 * Performs the AJAX validation.
+	 * @param CModel the model to be validated
+	 */
+	protected function performAjaxValidation($model, $form=null)
 	{
-		try
+		if(isset($_POST['ajax']) && $_POST['ajax'] === 'simulacao-equipamento-form')
 		{
-			$model->save();
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
 		}
-		catch(Exception $e)
-		{
-			$this->showError($e);
-		}		
 	}
-
-	function showError(Exception $e)
-	{
-		if($e->getCode()==23000)
-			$message = "This operation is not permitted due to an existing foreign key reference.";
-		else
-			$message = "Invalid operation.";
-		throw new CHttpException($e->getCode(), $message);
-	}		
 }

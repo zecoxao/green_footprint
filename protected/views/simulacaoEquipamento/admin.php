@@ -1,13 +1,14 @@
-<!--Generated using Gimme CRUD freeware from www.HandsOnCoding.net -->
 <?php
+/** @var SimulacaoEquipamentoController $this */
+/** @var SimulacaoEquipamento $model */
 $this->breadcrumbs=array(
-	'SimulacaoEquipamentos'=>array('index'),
-	'Manage',
+	'Simulacao Equipamentos'=>array('index'),
+	Yii::t('AweCrud.app', 'Manage'),
 );
 
 $this->menu=array(
-	array('label'=>'List SimulacaoEquipamentos', 'url'=>array('index')),
-	array('label'=>'Create SimulacaoEquipamento', 'url'=>array('create')),
+	array('label' => Yii::t('AweCrud.app', 'List') . ' ' . SimulacaoEquipamento::label(2), 'icon' => 'list', 'url' => array('index')),
+	array('label' => Yii::t('AweCrud.app', 'Create') . ' ' . SimulacaoEquipamento::label(), 'icon' => 'plus', 'url' => array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -16,7 +17,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('simulacaoEquipamentogrid', {
+	$.fn.yiiGridView.update('simulacao-equipamento-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -24,55 +25,37 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage SimulacaoEquipamentos</h1>
+<fieldset>
+    <legend>
+        <?php echo Yii::t('AweCrud.app', 'Manage') ?> <?php echo SimulacaoEquipamento::label(2) ?>    </legend>
 
-<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
-
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
+<?php echo CHtml::link('<i class="icon-search"></i> ' . Yii::t('AweCrud.app', 'Advanced Search'), '#', array('class' => 'search-button btn')) ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
-	'model'=>$model,
+	'model' => $model,
 )); ?>
 </div><!-- search-form -->
 
-<?php 
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id'=>'simulacaoEquipamentogrid',
-    'dataProvider'=>$model->search(),
-    'filter'=>$model,
-    'columns'=>array(
-        'simulacao',
-        'equipamento',
+<?php $this->widget('bootstrap.widgets.TbGridView',array(
+    'id' => 'simulacao-equipamento-grid',
+    'type' => 'striped condensed',
+    'dataProvider' => $model->search(),
+    'filter' => $model,
+    'columns' => array(
+        'id',
         array(
-            'class'=>'CButtonColumn',
-            'template'=>'{view}{update}{delete}',
-            'buttons'=>array
-            (
-                'view' => array
-                (
-                    'url'=>
-                    'Yii::app()->createUrl("simulacaoEquipamento/view/", 
-                                            array("simulacao"=>$data->simulacao, "equipamento"=>$data->equipamento
-											))',
+                    'name' => 'simulacao',
+                    'value' => 'isset($data->simulacao0) ? $data->simulacao0 : null',
+                    'filter' => CHtml::listData(Simulacao::model()->findAll(), 'id', Simulacao::representingColumn()),
                 ),
-                'update' => array
-                (
-                    'url'=>
-                    'Yii::app()->createUrl("simulacaoEquipamento/update/", 
-                                            array("simulacao"=>$data->simulacao, "equipamento"=>$data->equipamento
-											))',
+        array(
+                    'name' => 'equipamento',
+                    'value' => 'isset($data->equipamento0) ? $data->equipamento0 : null',
+                    'filter' => CHtml::listData(Equipamento::model()->findAll(), 'id', Equipamento::representingColumn()),
                 ),
-                'delete'=> array
-                (
-                    'url'=>
-                    'Yii::app()->createUrl("simulacaoEquipamento/delete/", 
-                                            array("simulacao"=>$data->simulacao, "equipamento"=>$data->equipamento
-											))',
-                ),
-            ),
-        ),
-    ),
+		array(
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+		),
+	),
 )); ?>
+</fieldset>

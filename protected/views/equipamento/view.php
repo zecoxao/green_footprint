@@ -18,19 +18,39 @@ $this->menu=array(
 <fieldset>
     <legend><?php echo Yii::t('AweCrud.app', 'View') . ' ' . Equipamento::label(); ?> <?php echo CHtml::encode($model) ?></legend>
 
-<?php $this->widget('bootstrap.widgets.TbDetailView',array(
-	'data' => $model,
-	'attributes' => array(
+<?php $this->widget('bootstrap.widgets.TbGridView', array(
+    'id' => 'simulacao-equipamento-grid',
+    'type' => 'striped condensed',
+    'dataProvider' => $child_model->search_Equipamento($parentID),
+    'columns' => array(
         'id',
-        'nome',
         array(
-			'name'=>'potencia',
-			'value'=>($model->potencia0 !== null) ? CHtml::link($model->potencia0, array('/potencia/view', 'id' => $model->potencia0->id)).' ' : null,
-			'type'=>'html',
-		),
-        'horas',
-        'quantidade',
-        'consumo',
-	),
-)); ?>
+            'name' => 'simulacao',
+            'value' => 'isset($data->simulacao0) ? $data->simulacao0 : null',
+            'filter' => CHtml::listData(Simulacao::model()->findAll(), 'id', Simulacao::representingColumn()),
+        ),
+        array(
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => '{create}{view}{update}{delete}',
+            'buttons' => array(
+                'create' => array(
+                    'label' => '+', // text label of the button
+                    'url' => 'Yii::app()->createUrl("simulacaoEquipamento/create", array("id"=>$data->id))',
+                ),
+                'view' => array(
+                    'label' => 'r', // text label of the button
+                    'url' => 'Yii::app()->createUrl("simulacaoEquipamento/view", array("id"=>$data->id))',
+                ),
+                'update' => array(
+                    'label' => 'u', // text label of the button
+                    'url' => 'Yii::app()->createUrl("simulacaoEquipamento/update", array("id"=>$data->id))',
+                ),
+                'delete' => array(
+                    'label' => 'd', // text label of the button
+                    'url' => 'Yii::app()->createUrl("simulacaoEquipamento/delete", array("id"=>$data->id))',
+                ),
+            ),
+        ),
+    )
+));?>
 </fieldset>

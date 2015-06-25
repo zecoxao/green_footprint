@@ -18,7 +18,6 @@
  *
  * @property Potencia $potencia0
  * @property Simulacao[] $simulacaos
- * @property Visita[] $visitas
  */
 abstract class BaseEquipamento extends AweActiveRecord {
 
@@ -47,8 +46,7 @@ abstract class BaseEquipamento extends AweActiveRecord {
     public function relations() {
         return array(
             'potencia0' => array(self::BELONGS_TO, 'Potencia', 'potencia'),
-            'simulacaos' => array(self::HAS_MANY, 'Simulacao', 'equipamento'),
-            'visitas' => array(self::HAS_MANY, 'Visita', 'equipamento'),
+            'simulacaos' => array(self::MANY_MANY, 'Simulacao', 'simulacao_equipamento(equipamento, simulacao)'),
         );
     }
 
@@ -65,7 +63,6 @@ abstract class BaseEquipamento extends AweActiveRecord {
                 'consumo' => Yii::t('app', 'Consumo'),
                 'potencia0' => null,
                 'simulacaos' => null,
-                'visitas' => null,
         );
     }
 
